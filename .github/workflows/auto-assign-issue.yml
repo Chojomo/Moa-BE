@@ -1,0 +1,18 @@
+name: Auto-assign Issue to Creator
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  auto-assign:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: "Auto-assign issue to creator"
+        uses: pozil/auto-assign-issue@v1
+        with:
+          assignees: ${{ github.actor }}
+          repo-token: ${{ secrets.MOA_GITHUB_TOKEN }}
+          allowSelfAssign: true
