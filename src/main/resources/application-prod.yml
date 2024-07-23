@@ -10,3 +10,19 @@ server:
 spring:
   application:
     name: moa
+
+  datasource:
+    url: jdbc:mysql://${MOA_DB_ENDPOINT}/${MOA_DB_NAME}?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${MOA_DB_ID}
+    password: ${MOA_DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        highlight_sql: true
+        format_sql: true
+        use_sql_comments: true
