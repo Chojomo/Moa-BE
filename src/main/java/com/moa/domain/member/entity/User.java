@@ -7,8 +7,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity(name = "USER")
 @Getter
@@ -16,10 +18,9 @@ import java.time.LocalDateTime;
 public class User extends CreatedAt {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    @Comment("유저 식별 ID")
-    private Long userId;
+    @UuidGenerator
+    @Column(name = "user_uuid", columnDefinition = "BINARY(16)",  updatable = false, nullable = false)
+    private UUID userId;
 
     @Column(name = "user_email", nullable = false, unique = true)
     @Comment("유저 계정")
