@@ -26,3 +26,8 @@ spring:
         highlight_sql: true
         format_sql: true
         use_sql_comments: true
+
+jwt:
+  key: ${MOA_JWT_SECRET_KEY}
+  access-token-expiration-minutes: ${MOA_ACCESS_TOKEN_EXP}
+  refresh-token-expiration-minutes: ${MOA_REFRESH_TOKEN_EXP}
