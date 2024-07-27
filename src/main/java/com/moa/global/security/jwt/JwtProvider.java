@@ -31,8 +31,8 @@ public class JwtProvider {
     @Value("${jwt.access-token-expiration-minutes}")
     private Integer accessTokenExpirationMinutes;
 
-    @Value("{jwt.refresh-token-expiration-minutes}")
-    private Integer refreshTokenExpirationMinutes;
+//    @Value("{jwt.refresh-token-expiration-minutes}")
+//    private Integer refreshTokenExpirationMinutes;
 
     public String createAccessToken(User user) {
         Map<String, Object> claims = new HashMap<>();
