@@ -10,6 +10,8 @@ import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "USER")
@@ -46,18 +48,25 @@ public class User extends CreatedAt {
     @Comment("유저 소개글")
     private String userIntroduce;
 
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "USER_ROLES", joinColumns = @JoinColumn(name = "user_uuid"))
+    @Column(name = "user_role")
+    @Comment("사용자 권한")
+    private List<String> roles = new ArrayList<>();
+
     @Column(name = "last_active_time")
     @Comment("마지막 활동 시간")
     private LocalDateTime lastActiveTime;
 
     @Builder
-    public User(String userEmail, String userPw, String userNickname, Byte userEmailType, String userProfileImage, String userIntroduce, LocalDateTime lastActiveTime) {
+    public User(String userEmail, String userPw, String userNickname, Byte userEmailType, String userProfileImage, String userIntroduce, List<String> roles, LocalDateTime lastActiveTime) {
         this.userEmail = userEmail;
         this.userPw = userPw;
         this.userNickname = userNickname;
         this.userEmailType = userEmailType;
         this.userProfileImage = userProfileImage;
         this.userIntroduce = userIntroduce;
+        this.roles = roles;
         this.lastActiveTime = lastActiveTime;
     }
 

@@ -4,6 +4,8 @@ import com.moa.domain.member.dto.UserDto;
 import com.moa.domain.member.entity.User;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class UserMapper {
 
@@ -15,6 +17,7 @@ public class UserMapper {
                 .userEmailType((byte) 0)
                 // 추후 minio 사용하여 링크 변경
                 .userProfileImage("https://gjs-photoday-practice.s3.ap-northeast-2.amazonaws.com/userImage.png")
+                .roles(List.of("USER"))
                 .build();
     }
 

@@ -1,14 +1,19 @@
 package com.moa.global.security.configuration;
 
+import com.moa.domain.member.repository.UserRepository;
 import com.moa.global.security.filter.JwtAuthenticationFilter;
+import com.moa.global.security.filter.JwtVerificationFilter;
 import com.moa.global.security.handler.UserAuthenticationSuccessHandler;
 import com.moa.global.security.jwt.JwtProvider;
+import com.moa.global.security.principaldetails.PrincipalDetailsService;
+import com.moa.global.security.utils.CustomAuthorityUtils;
 import com.moa.global.security.utils.UserDataResponder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,6 +34,9 @@ public class SecurityConfiguration {
 
     private final JwtProvider jwtProvider;
     private final UserDataResponder userDataResponder;
+    private final CustomAuthorityUtils customAuthorityUtils;
+    private final PrincipalDetailsService principalDetailsService;
+    private final UserRepository userRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -74,9 +82,11 @@ public class SecurityConfiguration {
 
     public void addCustomFilters(HttpSecurity httpSecurity, AuthenticationManager authenticationManager) {
         JwtAuthenticationFilter jwtAuthenticationFilter = getJwtAuthenticationFilter(authenticationManager);
+        JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtProvider, userRepository, customAuthorityUtils, principalDetailsService);
 
         httpSecurity
-                .addFilter(jwtAuthenticationFilter);
+                .addFilter(jwtAuthenticationFilter)
+                .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
     }
 
     private JwtAuthenticationFilter getJwtAuthenticationFilter(AuthenticationManager authenticationManager) {
