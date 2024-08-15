@@ -10,7 +10,16 @@ server:
 spring:
   application:
     name: moa
-
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${MOA_GOOGLE_CLIENT_ID}
+            client-secret: ${MOA_GOOGLE_CLIENT_SECRET}
+            scope:
+              - email
+              - profile
   datasource:
     url: jdbc:mysql://${MOA_DB_ENDPOINT}/${MOA_DB_NAME}?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: ${MOA_DB_ID}
