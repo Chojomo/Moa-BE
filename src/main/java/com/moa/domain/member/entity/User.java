@@ -2,10 +2,7 @@ package com.moa.domain.member.entity;
 
 import com.moa.domain.common.CreatedAt;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -16,6 +13,7 @@ import java.util.UUID;
 
 @Entity(name = "USER")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends CreatedAt {
 
@@ -28,7 +26,7 @@ public class User extends CreatedAt {
     @Comment("유저 계정")
     private String userEmail;
 
-    @Column(name = "user_pw", nullable = false)
+    @Column(name = "user_pw")
     @Comment("유저 비밀번호")
     private String userPw;
 

@@ -1,7 +1,6 @@
 package com.moa.domain.member.dto;
 
 import lombok.Data;
-import org.hibernate.annotations.processing.Pattern;
 
 public class UserDto {
 
