@@ -35,8 +35,8 @@ public class User extends CreatedAt {
     private String userNickname;
 
     @Column(name = "user_email_type", nullable = false)
-    @Comment("유저 이메일 타입 0: MOA, 1: 네이버, 2: 구글, 3: 카카오")
-    private Byte userEmailType;
+    @Comment("유저 이메일 타입 일반: moa, 구글: google")
+    private String userEmailType;
 
     @Column(name = "user_profile_image", nullable = false)
     @Comment("유저 프로필 사진")
@@ -57,7 +57,7 @@ public class User extends CreatedAt {
     private LocalDateTime lastActiveTime;
 
     @Builder
-    public User(String userEmail, String userPw, String userNickname, Byte userEmailType, String userProfileImage, String userIntroduce, List<String> roles, LocalDateTime lastActiveTime) {
+    public User(String userEmail, String userPw, String userNickname, String userEmailType, String userProfileImage, String userIntroduce, List<String> roles, LocalDateTime lastActiveTime) {
         this.userEmail = userEmail;
         this.userPw = userPw;
         this.userNickname = userNickname;

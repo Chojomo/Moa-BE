@@ -14,7 +14,7 @@ public class UserMapper {
                 .userEmail(req.getUserEmail())
                 .userPw(encodePassword)
                 .userNickname(getUserNicknameFromEmail(req.getUserEmail()))
-                .userEmailType((byte) 0)
+                .userEmailType("moa")
                 // 추후 minio 사용하여 링크 변경
                 .userProfileImage("https://gjs-photoday-practice.s3.ap-northeast-2.amazonaws.com/userImage.png")
                 .roles(List.of("USER"))
