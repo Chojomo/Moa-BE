@@ -24,13 +24,13 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
         Object email = oAuth2User.getAttribute("email");
-        Object picture = oAuth2User.getAttribute("picture");
 
         User user = User.builder()
                 .userEmail((String) email)
                 .userNickname(getUserNicknameFromEmail((String) email))
-                .userEmailType((byte) 2)
-                .userProfileImage((String) picture) // 프로필 이미지 minio 에 저장 후 해당 url DB 저장
+                .userEmailType(userRequest.getClientRegistration().getRegistrationId())
+                // 추후 minio 사용하여 링크 변경
+                .userProfileImage("https://gjs-photoday-practice.s3.ap-northeast-2.amazonaws.com/userImage.png")
                 .roles(List.of("USER"))
                 .build();
 
