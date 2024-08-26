@@ -49,6 +49,10 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                 Map<String, Object> attributes = oAuth2User.getAttribute("kakao_account");
                 yield (String) Objects.requireNonNull(attributes).get("email");
             }
+            case "naver" -> {
+                Map<String, Object> attributes = oAuth2User.getAttribute("response");
+                yield (String) Objects.requireNonNull(attributes).get("email");
+            }
             default -> null;
         };
     }

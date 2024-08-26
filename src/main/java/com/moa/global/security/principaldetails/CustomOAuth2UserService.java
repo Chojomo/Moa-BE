@@ -54,6 +54,20 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                         .roles(List.of("USER"))
                         .build();
             }
+            case "naver" -> {
+                Map<String, Object> attributes = oAuth2User.getAttribute("response");
+
+                String email = (String) Objects.requireNonNull(attributes).get("email");
+
+                user = User.builder()
+                        .userEmail(email)
+                        .userNickname(getUserNicknameFromEmail(email))
+                        .userEmailType(userRequest.getClientRegistration().getRegistrationId())
+                        // 추후 minio 사용하여 링크 변경
+                        .userProfileImage("https://gjs-photoday-practice.s3.ap-northeast-2.amazonaws.com/userImage.png")
+                        .roles(List.of("USER"))
+                        .build();
+            }
         }
 
         userService.createOrUpdateUser(user);
