@@ -1,7 +1,7 @@
 package com.moa.global.security.principaldetails;
 
 import com.moa.domain.member.entity.User;
-import com.moa.domain.member.service.UserService;
+import com.moa.global.security.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -18,7 +18,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
-    private final UserService userService;
+    private final AuthService authService;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -70,7 +70,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             }
         }
 
-        userService.createOrUpdateUser(user);
+        authService.registerOrUpdateUser(user);
 
         return oAuth2User;
     }
