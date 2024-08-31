@@ -28,7 +28,7 @@ public class User extends CreatedAt {
 
     @Column(name = "user_pw")
     @Comment("유저 비밀번호")
-    private String userPw;
+    private String userPassword;
 
     @Column(name = "user_nickname", nullable = false)
     @Comment("유저 닉네임")
@@ -57,9 +57,9 @@ public class User extends CreatedAt {
     private LocalDateTime lastActiveTime;
 
     @Builder
-    public User(String userEmail, String userPw, String userNickname, String userEmailType, String userProfileImage, String userIntroduce, List<String> roles, LocalDateTime lastActiveTime) {
+    public User(String userEmail, String userPassword, String userNickname, String userEmailType, String userProfileImage, String userIntroduce, List<String> roles, LocalDateTime lastActiveTime) {
         this.userEmail = userEmail;
-        this.userPw = userPw;
+        this.userPassword = userPassword;
         this.userNickname = userNickname;
         this.userEmailType = userEmailType;
         this.userProfileImage = userProfileImage;

@@ -12,7 +12,7 @@ public class UserMapper {
     public User createUserReqToUser(UserDto.CreateUserReq req, String encodePassword) {
         return User.builder()
                 .userEmail(req.getUserEmail())
-                .userPw(encodePassword)
+                .userPassword(encodePassword)
                 .userNickname(getUserNicknameFromEmail(req.getUserEmail()))
                 .userEmailType("moa")
                 // 추후 minio 사용하여 링크 변경
