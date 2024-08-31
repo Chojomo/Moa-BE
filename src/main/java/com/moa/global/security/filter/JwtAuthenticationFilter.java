@@ -2,7 +2,7 @@ package com.moa.global.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moa.domain.member.entity.User;
-import com.moa.global.security.dto.LoginDto;
+import com.moa.global.security.dto.AuthDto;
 import com.moa.global.security.jwt.JwtProvider;
 import com.moa.global.security.principaldetails.PrincipalDetailsService;
 import com.moa.global.security.utils.UserDataResponder;
@@ -33,7 +33,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         ObjectMapper objectMapper = new ObjectMapper();
-        LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
+        AuthDto.LoginDto loginDto = objectMapper.readValue(request.getInputStream(), AuthDto.LoginDto.class);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.getUserEmail(), loginDto.getUserPassword());
 
         return authenticationManager.authenticate(authenticationToken);
