@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(UserDto.CreateUserReq req) {
-        String encodePassword = passwordEncoder.encode(req.getUserPw());
+        String encodePassword = passwordEncoder.encode(req.getUserPassword());
         User user = userMapper.createUserReqToUser(req, encodePassword);
 
         userRepository.save(user);

@@ -7,7 +7,7 @@ public class UserDto {
     @Data
     public static class CreateUserReq {
         private String userEmail;
-        private String userPw;
+        private String userPassword;
     }
 
 }

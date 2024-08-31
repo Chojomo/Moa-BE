@@ -48,7 +48,7 @@ public class PrincipalDetailsService implements UserDetailsService {
 
         @Override
         public String getPassword() {
-            return user.getUserPw();
+            return user.getUserPassword();
         }
 
         @Override
