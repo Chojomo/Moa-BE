@@ -35,7 +35,7 @@ public class User extends CreatedAt {
     private String userNickname;
 
     @Column(name = "user_email_type", nullable = false)
-    @Comment("유저 이메일 타입 일반: moa, 구글: google")
+    @Comment("유저 이메일 타입 일반: moa, 구글: google, 카카오: kakao, 네이버: naver")
     private String userEmailType;
 
     @Column(name = "user_profile_image", nullable = false)
