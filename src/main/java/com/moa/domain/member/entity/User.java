@@ -20,6 +20,7 @@ public class User extends CreatedAt {
     @Id
     @UuidGenerator
     @Column(name = "user_uuid", columnDefinition = "BINARY(16)",  updatable = false, nullable = false)
+    @Comment("유저 UUID")
     private UUID userId;
 
     @Column(name = "user_email", nullable = false, unique = true)
