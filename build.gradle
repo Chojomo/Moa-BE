@@ -30,6 +30,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	implementation 'com.google.code.gson:gson'
+	implementation 'software.amazon.awssdk:s3:2.20.55'
 
 	compileOnly 'org.projectlombok:lombok'
 

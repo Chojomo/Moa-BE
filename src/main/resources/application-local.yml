@@ -63,6 +63,17 @@ spring:
         highlight_sql: true
         format_sql: true
         use_sql_comments: true
+cloud:
+  aws:
+    s3:
+      bucket: ${MOA_AWS_BUCKET_NAME}
+      endpoint: ${MOA_AWS_ENDPOINT_URL}
+      path-style-access: ${MOA_AWS_PATH_STYLE_ACCESS}
+    credentials:
+      accessKey: ${MOA_AWS_ACCESS_KEY}
+      secretKey: ${MOA_AWS_SECRET_KEY}
+    region:
+      static: ${MOA_AWS_REGION}
 
 jwt:
   key: ${MOA_JWT_SECRET_KEY}
