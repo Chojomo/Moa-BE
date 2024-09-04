@@ -8,6 +8,8 @@ import java.util.UUID;
 
 public interface DiaryService {
 
+    void initializeDiary();
+
     DiaryDto.CreateDiaryImageResponse createDiaryImage(UUID imageId, MultipartFile multipartFile) throws IOException;
 
 }
