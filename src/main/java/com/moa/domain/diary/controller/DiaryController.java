@@ -19,6 +19,12 @@ public class DiaryController {
 
     private final DiaryService diaryService;
 
+    @PostMapping("/initialize")
+    public ResponseEntity<Void> initializeDiary() {
+        diaryService.initializeDiary();
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("/{diaryId}/image")
     public ResponseEntity<SingleResponseDto<DiaryDto.CreateDiaryImageResponse>> createDiaryImage(@PathVariable UUID diaryId,
                                                                                                  @RequestPart(value = "image") MultipartFile multipartFile) throws IOException {
