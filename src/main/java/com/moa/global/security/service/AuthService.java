@@ -9,4 +9,6 @@ public interface AuthService {
 
     void registerOrUpdateUser(User user);
 
+    User getLoginUser();
+
 }
