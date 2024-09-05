@@ -22,9 +22,9 @@ public class ObjectStorageService {
 
     private final S3Client s3Client;
 
-    public String uploadDiaryImage(String userNickname, UUID imageId, MultipartFile multipartFile) throws IOException {
+    public String uploadDiaryImage(UUID diaryId, UUID imageId, MultipartFile multipartFile) throws IOException {
         String fileName = multipartFile.getOriginalFilename();
-        String folderPath = "diary-images/" + userNickname + "/" + imageId;
+        String folderPath = "diaries/" + diaryId + "/diary-images/" + imageId + "/";
 
         String fileDirectory = folderPath + fileName;
 
@@ -42,7 +42,7 @@ public class ObjectStorageService {
 
         GetUrlRequest getUrlRequest = GetUrlRequest.builder()
                 .bucket(bucket)
-                .key(fileName)
+                .key(fileDirectory)
                 .build();
 
         return String.valueOf(s3Client.utilities().getUrl(getUrlRequest));

@@ -52,14 +52,18 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public DiaryDto.CreateDiaryImageResponse createDiaryImage(UUID imageId, MultipartFile multipartFile) throws IOException {
+    public DiaryDto.CreateDiaryImageResponse createDiaryImage(UUID diaryId, MultipartFile multipartFile) throws IOException {
         User loginUser = authService.getLoginUser();
 
+        Diary diary = verifiedDiary(diaryId);
+
         DiaryImage savedDiaryImage = diaryImageRepository.save(DiaryImage.builder()
-                .image(diaryRepository.getReferenceById(imageId))
+                .image(diaryRepository.getReferenceById(diaryId))
                 .build());
 
-        String imageUrl = objectStorageService.uploadDiaryImage(loginUser.getUserNickname(), savedDiaryImage.getImageId(), multipartFile);
+        verifyDiaryOwner(diary, loginUser);
+
+        String imageUrl = objectStorageService.uploadDiaryImage(diary.getDiaryId(), savedDiaryImage.getImageId(), multipartFile);
 
         savedDiaryImage.updateImageUrl(imageUrl);
 
@@ -67,5 +71,17 @@ public class DiaryServiceImpl implements DiaryService {
                 .imageUrl(imageUrl)
                 .build();
     }
+
+    public Diary verifiedDiary(UUID diaryId) {
+        Optional<Diary> optionalDiary = diaryRepository.findById(diaryId);
+        return optionalDiary.orElseThrow();
+    }
+
+    public void verifyDiaryOwner(Diary diary, User user) {
+        if (!(diary.getUser() == user)) {
+            log.info("다이어리 수정 권한이 없습니다.");
+        }
+    }
+
 
 }
