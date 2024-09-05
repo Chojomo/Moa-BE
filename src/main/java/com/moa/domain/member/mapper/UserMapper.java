@@ -13,8 +13,8 @@ public class UserMapper {
         return User.builder()
                 .userEmail(req.getUserEmail())
                 .userPassword(encodePassword)
-                .username(getUserNicknameFromEmail(req.getUserEmail()))
-                .userNickname(getUserNicknameFromEmail(req.getUserEmail()))
+                .username(getUsernameFromEmail(req.getUserEmail()))
+                .userNickname(getUsernameFromEmail(req.getUserEmail()))
                 .userEmailType("moa")
                 // 추후 minio 사용하여 링크 변경
                 .userProfileImage("https://gjs-photoday-practice.s3.ap-northeast-2.amazonaws.com/userImage.png")
@@ -22,7 +22,7 @@ public class UserMapper {
                 .build();
     }
 
-    public String getUserNicknameFromEmail(String email) {
+    public String getUsernameFromEmail(String email) {
         return email.substring(0, email.indexOf('@'));
     }
 
