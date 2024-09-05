@@ -10,6 +10,6 @@ public interface DiaryService {
 
     DiaryDto.InitializeDiaryResponse initializeDiary();
 
-    DiaryDto.CreateDiaryImageResponse createDiaryImage(UUID imageId, MultipartFile multipartFile) throws IOException;
+    DiaryDto.CreateDiaryImageResponse createDiaryImage(UUID diaryId, MultipartFile multipartFile) throws IOException;
 
 }
