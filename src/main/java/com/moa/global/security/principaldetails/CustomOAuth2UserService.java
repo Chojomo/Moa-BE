@@ -33,8 +33,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
                 user = User.builder()
                         .userEmail(email)
-                        .username(getUserNicknameFromEmail(Objects.requireNonNull(email)))
-                        .userNickname(getUserNicknameFromEmail(Objects.requireNonNull(email)))
+                        .username(getUsernameFromEmail(Objects.requireNonNull(email)))
+                        .userNickname(getUsernameFromEmail(Objects.requireNonNull(email)))
                         .userEmailType(userRequest.getClientRegistration().getRegistrationId())
                         // 추후 minio 사용하여 링크 변경
                         .userProfileImage("https://gjs-photoday-practice.s3.ap-northeast-2.amazonaws.com/userImage.png")
@@ -48,8 +48,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
                 user = User.builder()
                         .userEmail(email)
-                        .userIntroduce(getUserNicknameFromEmail(email))
-                        .userNickname(getUserNicknameFromEmail(email))
+                        .userIntroduce(getUsernameFromEmail(email))
+                        .userNickname(getUsernameFromEmail(email))
                         .userEmailType(userRequest.getClientRegistration().getRegistrationId())
                         // 추후 minio 사용하여 링크 변경
                         .userProfileImage("https://gjs-photoday-practice.s3.ap-northeast-2.amazonaws.com/userImage.png")
@@ -63,8 +63,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
                 user = User.builder()
                         .userEmail(email)
-                        .username(getUserNicknameFromEmail(email))
-                        .userNickname(getUserNicknameFromEmail(email))
+                        .username(getUsernameFromEmail(email))
+                        .userNickname(getUsernameFromEmail(email))
                         .userEmailType(userRequest.getClientRegistration().getRegistrationId())
                         // 추후 minio 사용하여 링크 변경
                         .userProfileImage("https://gjs-photoday-practice.s3.ap-northeast-2.amazonaws.com/userImage.png")
@@ -78,7 +78,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         return oAuth2User;
     }
 
-    private String getUserNicknameFromEmail(String email) {
+    private String getUsernameFromEmail(String email) {
         return email.substring(0, email.indexOf('@'));
     }
 
