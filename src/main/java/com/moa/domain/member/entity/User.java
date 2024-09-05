@@ -31,6 +31,10 @@ public class User extends CreatedAt {
     @Comment("유저 비밀번호")
     private String userPassword;
 
+    @Column(name = "username")
+    @Comment("유저 네임")
+    private String username;
+
     @Column(name = "user_nickname", nullable = false)
     @Comment("유저 닉네임")
     private String userNickname;
@@ -58,9 +62,10 @@ public class User extends CreatedAt {
     private LocalDateTime lastActiveTime;
 
     @Builder
-    public User(String userEmail, String userPassword, String userNickname, String userEmailType, String userProfileImage, String userIntroduce, List<String> roles, LocalDateTime lastActiveTime) {
+    public User(String userEmail, String userPassword, String username, String userNickname, String userEmailType, String userProfileImage, String userIntroduce, List<String> roles, LocalDateTime lastActiveTime) {
         this.userEmail = userEmail;
         this.userPassword = userPassword;
+        this.username = username;
         this.userNickname = userNickname;
         this.userEmailType = userEmailType;
         this.userProfileImage = userProfileImage;
