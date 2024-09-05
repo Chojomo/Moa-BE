@@ -13,6 +13,7 @@ public class UserMapper {
         return User.builder()
                 .userEmail(req.getUserEmail())
                 .userPassword(encodePassword)
+                .username(getUserNicknameFromEmail(req.getUserEmail()))
                 .userNickname(getUserNicknameFromEmail(req.getUserEmail()))
                 .userEmailType("moa")
                 // 추후 minio 사용하여 링크 변경
