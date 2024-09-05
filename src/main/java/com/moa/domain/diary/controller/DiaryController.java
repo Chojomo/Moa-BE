@@ -20,9 +20,8 @@ public class DiaryController {
     private final DiaryService diaryService;
 
     @PostMapping("/initialize")
-    public ResponseEntity<Void> initializeDiary() {
-        diaryService.initializeDiary();
-        return ResponseEntity.ok().build();
+    public ResponseEntity<SingleResponseDto<DiaryDto.InitializeDiaryResponse>> initializeDiary() {
+        return new ResponseEntity<>(new SingleResponseDto<>(diaryService.initializeDiary()), HttpStatus.OK);
     }
 
     @PostMapping("/{diaryId}/image")

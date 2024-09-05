@@ -3,12 +3,20 @@ package com.moa.domain.diary.dto;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.UUID;
+
 public class DiaryDto {
 
     @Data
     @Builder
     public static class CreateDiaryImageResponse {
         private String imageUrl;
+    }
+
+    @Data
+    @Builder
+    public static class InitializeDiaryResponse {
+        private UUID diaryId;
     }
 
 }

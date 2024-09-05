@@ -31,16 +31,23 @@ public class DiaryServiceImpl implements DiaryService {
     private final ObjectStorageService objectStorageService;
 
     @Override
-    public void initializeDiary() {
+    public DiaryDto.InitializeDiaryResponse initializeDiary() {
         User loginUser = authService.getLoginUser();
 
         Optional<Diary> optionalDiary = diaryRepository.findDiaryByDiaryStatusAndUser((byte) 0, loginUser);
 
         if (optionalDiary.isEmpty()) {
-            diaryRepository.save(Diary.builder()
+            Diary savedDiary = diaryRepository.save(Diary.builder()
                     .diaryStatus((byte) 0)
                     .user(loginUser)
                     .build());
+            return DiaryDto.InitializeDiaryResponse.builder()
+                    .diaryId(savedDiary.getDiaryId())
+                    .build();
+        } else {
+            return DiaryDto.InitializeDiaryResponse.builder()
+                    .diaryId(optionalDiary.get().getDiaryId())
+                    .build();
         }
     }
 
