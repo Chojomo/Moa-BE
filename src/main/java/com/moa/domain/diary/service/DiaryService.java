@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface DiaryService {
 
-    void initializeDiary();
+    DiaryDto.InitializeDiaryResponse initializeDiary();
 
     DiaryDto.CreateDiaryImageResponse createDiaryImage(UUID imageId, MultipartFile multipartFile) throws IOException;
 
