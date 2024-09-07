@@ -28,4 +28,15 @@ public class DiaryDto {
         private Boolean isDiaryPublic;
     }
 
+    @Data
+    @Builder
+    public static class GetDiaryResponse {
+        private UUID diaryId;
+        private Byte diaryStatus;
+        private String diaryTitle;
+        private String diaryContents;
+        private String diaryThumbnail;
+        private Boolean isDiaryPublic;
+    }
+
 }

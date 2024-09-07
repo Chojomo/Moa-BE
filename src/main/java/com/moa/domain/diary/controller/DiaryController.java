@@ -37,4 +37,9 @@ public class DiaryController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/{diaryId}")
+    public ResponseEntity<SingleResponseDto<DiaryDto.GetDiaryResponse>> getDiaryDetails(@PathVariable UUID diaryId) {
+        return new ResponseEntity<>(new SingleResponseDto<>(diaryService.getDiaryDetails(diaryId)), HttpStatus.OK);
+    }
+
 }

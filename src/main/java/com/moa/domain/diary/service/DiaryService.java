@@ -14,4 +14,6 @@ public interface DiaryService {
 
     void updateDiary(DiaryDto.UpdateDiaryRequest req);
 
+    DiaryDto.GetDiaryResponse getDiaryDetails(UUID diaryId);
+
 }
