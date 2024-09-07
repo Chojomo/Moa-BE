@@ -39,4 +39,14 @@ public class DiaryDto {
         private Boolean isDiaryPublic;
     }
 
+    @Data
+    @Builder
+    public static class PublishDiaryRequest {
+        private UUID diaryId;
+        private String diaryTitle;
+        private String diaryContents;
+        private String diaryThumbnail;
+        private Boolean isDiaryPublic;
+    }
+
 }

@@ -100,6 +100,17 @@ public class DiaryServiceImpl implements DiaryService {
         return diaryMapper.diaryToGetDiaryResponse(diary);
     }
 
+    @Override
+    public void publishDiary(DiaryDto.PublishDiaryRequest req) {
+        User loginUser = authService.getLoginUser();
+
+        Diary diary = verifiedDiary(req.getDiaryId());
+
+        verifyDiaryOwner(diary, loginUser);
+
+        diary.publishDiary(req.getDiaryTitle(), req.getDiaryContents(), req.getDiaryThumbnail(), req.getIsDiaryPublic());
+    }
+
     public Diary verifiedDiary(UUID diaryId) {
         Optional<Diary> optionalDiary = diaryRepository.findById(diaryId);
         return optionalDiary.orElseThrow();

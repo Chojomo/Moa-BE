@@ -72,4 +72,12 @@ public class Diary extends TimeStamped {
         this.isDairyPublic = null;
     }
 
+    public void publishDiary(String diaryTitle, String diaryContents, String diaryThumbnail, Boolean isDairyPublic) {
+        this.diaryTitle = diaryTitle;
+        this.diaryContents = diaryContents;
+        this.diaryThumbnail = diaryThumbnail;
+        this.isDairyPublic = isDairyPublic;
+        this.diaryStatus = 2;
+    }
+
 }

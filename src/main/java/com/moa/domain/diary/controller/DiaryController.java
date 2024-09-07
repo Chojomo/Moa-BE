@@ -42,4 +42,10 @@ public class DiaryController {
         return new ResponseEntity<>(new SingleResponseDto<>(diaryService.getDiaryDetails(diaryId)), HttpStatus.OK);
     }
 
+    @PostMapping("/publish")
+    public ResponseEntity<Void> publishDiary(@RequestBody DiaryDto.PublishDiaryRequest req) {
+        diaryService.publishDiary(req);
+        return ResponseEntity.ok().build();
+    }
+
 }
