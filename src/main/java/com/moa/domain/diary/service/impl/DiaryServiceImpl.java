@@ -47,6 +47,8 @@ public class DiaryServiceImpl implements DiaryService {
                     .diaryId(savedDiary.getDiaryId())
                     .build();
         } else {
+            optionalDiary.get().initializeDiary();
+
             return DiaryDto.InitializeDiaryResponse.builder()
                     .diaryId(optionalDiary.get().getDiaryId())
                     .build();

@@ -64,4 +64,11 @@ public class Diary extends TimeStamped {
         Optional.ofNullable(isDairyPublic).ifPresent(this::setIsDairyPublic);
     }
 
+    public void initializeDiary() {
+        this.diaryTitle = null;
+        this.diaryContents = null;
+        this.diaryThumbnail = null;
+        this.isDairyPublic = null;
+    }
+
 }
