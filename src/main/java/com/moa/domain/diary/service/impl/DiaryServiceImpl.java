@@ -38,21 +38,16 @@ public class DiaryServiceImpl implements DiaryService {
 
         Optional<Diary> optionalDiary = diaryRepository.findDiaryByDiaryStatusAndUser((byte) 0, loginUser);
 
-        if (optionalDiary.isEmpty()) {
-            Diary savedDiary = diaryRepository.save(Diary.builder()
-                    .diaryStatus((byte) 0)
-                    .user(loginUser)
-                    .build());
-            return DiaryDto.InitializeDiaryResponse.builder()
-                    .diaryId(savedDiary.getDiaryId())
-                    .build();
-        } else {
-            optionalDiary.get().initializeDiary();
+        optionalDiary.ifPresent(diaryRepository::delete);
 
-            return DiaryDto.InitializeDiaryResponse.builder()
-                    .diaryId(optionalDiary.get().getDiaryId())
-                    .build();
-        }
+        Diary savedDiary = diaryRepository.save(Diary.builder()
+                .diaryStatus((byte) 0)
+                .user(loginUser)
+                .build());
+
+        return DiaryDto.InitializeDiaryResponse.builder()
+                .diaryId(savedDiary.getDiaryId())
+                .build();
     }
 
     @Override
