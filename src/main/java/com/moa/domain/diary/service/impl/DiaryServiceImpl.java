@@ -3,6 +3,7 @@ package com.moa.domain.diary.service.impl;
 import com.moa.domain.diary.dto.DiaryDto;
 import com.moa.domain.diary.entity.Diary;
 import com.moa.domain.diary.entity.DiaryImage;
+import com.moa.domain.diary.mapper.DiaryMapper;
 import com.moa.domain.diary.repository.DiaryImageRepository;
 import com.moa.domain.diary.repository.DiaryRepository;
 import com.moa.domain.diary.service.DiaryService;
@@ -29,6 +30,7 @@ public class DiaryServiceImpl implements DiaryService {
     private final DiaryImageRepository diaryImageRepository;
     private final AuthService authService;
     private final ObjectStorageService objectStorageService;
+    private final DiaryMapper diaryMapper;
 
     @Override
     public DiaryDto.InitializeDiaryResponse initializeDiary() {
@@ -81,6 +83,19 @@ public class DiaryServiceImpl implements DiaryService {
         verifyDiaryOwner(diary, loginUser);
 
         diary.updateDiary(req.getDiaryTitle(), req.getDiaryContents(), req.getThumbnail(), req.getIsDiaryPublic());
+    }
+
+    @Override
+    public DiaryDto.GetDiaryResponse getDiaryDetails(UUID diaryId) {
+        User loginUser = authService.getLoginUser();
+
+        Diary diary = verifiedDiary(diaryId);
+
+        if (!diary.getIsDairyPublic() && !loginUser.getUserId().equals(diary.getUser().getUserId())) {
+            throw new RuntimeException();
+        }
+
+        return diaryMapper.diaryToGetDiaryResponse(diary);
     }
 
     public Diary verifiedDiary(UUID diaryId) {
