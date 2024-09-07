@@ -6,7 +6,10 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.UuidGenerator;
+import org.springframework.data.annotation.CreatedDate;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -47,6 +50,10 @@ public class Diary extends TimeStamped {
     @Comment("유저 UUID")
     private User user;
 
+    @Column(name = "published_at")
+    @Comment("게시 날짜")
+    private LocalDateTime publishedAt;
+
     @Builder
     public Diary(String diaryThumbnail, String diaryTitle, String diaryContents, Boolean isDairyPublic, Byte diaryStatus, User user) {
         this.diaryThumbnail = diaryThumbnail;
@@ -78,6 +85,7 @@ public class Diary extends TimeStamped {
         this.diaryThumbnail = diaryThumbnail;
         this.isDairyPublic = isDairyPublic;
         this.diaryStatus = 2;
+        this.publishedAt = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
     }
 
 }
