@@ -84,7 +84,7 @@ public class DiaryServiceImpl implements DiaryService {
 
         verifyDiaryOwner(diary, loginUser);
 
-        diary.updateDiary(req.getDiaryTitle(), req.getDiaryContents(), req.getThumbnail(), req.getIsDiaryPublic());
+        diary.updateDiary(req.getDiaryTitle(), req.getDiaryContents(), req.getThumbnail(), req.getIsDiaryPublic(), diary.getDiaryStatus());
     }
 
     @Override

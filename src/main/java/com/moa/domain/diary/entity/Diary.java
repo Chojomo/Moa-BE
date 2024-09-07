@@ -57,11 +57,12 @@ public class Diary extends TimeStamped {
         this.user = user;
     }
 
-    public void updateDiary(String diaryTitle, String diaryContents, String diaryThumbnail, Boolean isDairyPublic) {
+    public void updateDiary(String diaryTitle, String diaryContents, String diaryThumbnail, Boolean isDairyPublic, Byte diaryStatus) {
         Optional.ofNullable(diaryTitle).ifPresent(this::setDiaryTitle);
         Optional.ofNullable(diaryContents).ifPresent(this::setDiaryContents);
         Optional.ofNullable(diaryThumbnail).ifPresent(this::setDiaryThumbnail);
         Optional.ofNullable(isDairyPublic).ifPresent(this::setIsDairyPublic);
+        this.diaryStatus = (diaryStatus == 0 ? 1 : diaryStatus);
     }
 
     public void initializeDiary() {
