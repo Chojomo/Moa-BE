@@ -31,4 +31,10 @@ public class DiaryController {
         return new ResponseEntity<>(new SingleResponseDto<>(diaryImage), HttpStatus.OK);
     }
 
+    @PutMapping
+    public ResponseEntity<Void> updateDiary(@RequestBody DiaryDto.UpdateDiaryRequest req) {
+        diaryService.updateDiary(req);
+        return ResponseEntity.ok().build();
+    }
+
 }

@@ -12,4 +12,6 @@ public interface DiaryService {
 
     DiaryDto.CreateDiaryImageResponse createDiaryImage(UUID diaryId, MultipartFile multipartFile) throws IOException;
 
+    void updateDiary(DiaryDto.UpdateDiaryRequest req);
+
 }

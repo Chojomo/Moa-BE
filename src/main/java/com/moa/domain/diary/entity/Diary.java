@@ -7,6 +7,7 @@ import lombok.*;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Entity(name = "DIARY")
@@ -54,6 +55,13 @@ public class Diary extends TimeStamped {
         this.isDairyPublic = isDairyPublic;
         this.diaryStatus = diaryStatus;
         this.user = user;
+    }
+
+    public void updateDiary(String diaryTitle, String diaryContents, String diaryThumbnail, Boolean isDairyPublic) {
+        Optional.ofNullable(diaryTitle).ifPresent(this::setDiaryTitle);
+        Optional.ofNullable(diaryContents).ifPresent(this::setDiaryContents);
+        Optional.ofNullable(diaryThumbnail).ifPresent(this::setDiaryThumbnail);
+        Optional.ofNullable(isDairyPublic).ifPresent(this::setIsDairyPublic);
     }
 
 }
