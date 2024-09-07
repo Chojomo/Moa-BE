@@ -9,6 +9,7 @@ import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -84,6 +85,7 @@ public class Diary extends TimeStamped {
         this.diaryThumbnail = diaryThumbnail;
         this.isDairyPublic = isDairyPublic;
         this.diaryStatus = 2;
+        this.publishedAt = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
     }
 
 }
