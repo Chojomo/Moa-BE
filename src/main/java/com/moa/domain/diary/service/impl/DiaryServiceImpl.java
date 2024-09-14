@@ -75,9 +75,9 @@ public class DiaryServiceImpl implements DiaryService {
     public void updateDiary(DiaryDto.UpdateDiaryRequest req) {
         User loginUser = authService.getLoginUser();
 
-        Diary diary = verifiedDiary(req.getDiaryId());
+        Diary diary = findDiaryOrThrow(req.getDiaryId());
 
-        verifyDiaryOwner(diary, loginUser);
+        checkDiaryOwnership(diary, loginUser);
 
         diary.updateDiary(req.getDiaryTitle(), req.getDiaryContents(), req.getThumbnail(), req.getIsDiaryPublic(), diary.getDiaryStatus());
     }
@@ -86,7 +86,7 @@ public class DiaryServiceImpl implements DiaryService {
     public DiaryDto.GetDiaryResponse getDiaryDetails(UUID diaryId) {
         User loginUser = authService.getLoginUser();
 
-        Diary diary = verifiedDiary(diaryId);
+        Diary diary = findDiaryOrThrow(diaryId);
 
         if (!diary.getIsDairyPublic() && !loginUser.getUserId().equals(diary.getUser().getUserId())) {
             throw new RuntimeException();
@@ -99,23 +99,22 @@ public class DiaryServiceImpl implements DiaryService {
     public void publishDiary(DiaryDto.PublishDiaryRequest req) {
         User loginUser = authService.getLoginUser();
 
-        Diary diary = verifiedDiary(req.getDiaryId());
+        Diary diary = findDiaryOrThrow(req.getDiaryId());
 
-        verifyDiaryOwner(diary, loginUser);
+        checkDiaryOwnership(diary, loginUser);
 
         diary.publishDiary(req.getDiaryTitle(), req.getDiaryContents(), req.getDiaryThumbnail(), req.getIsDiaryPublic());
     }
 
-    public Diary verifiedDiary(UUID diaryId) {
+    public Diary findDiaryOrThrow(UUID diaryId) {
         Optional<Diary> optionalDiary = diaryRepository.findById(diaryId);
         return optionalDiary.orElseThrow();
     }
 
-    public void verifyDiaryOwner(Diary diary, User user) {
-        if (!(diary.getUser() == user)) {
+    public void checkDiaryOwnership(Diary diary, User user) {
+        if (!diary.getUser().getUserId().equals(user.getUserId())) {
             log.info("다이어리 수정 권한이 없습니다.");
         }
     }
-
 
 }
