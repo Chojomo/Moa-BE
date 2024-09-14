@@ -54,13 +54,13 @@ public class DiaryServiceImpl implements DiaryService {
     public DiaryDto.CreateDiaryImageResponse createDiaryImage(UUID diaryId, MultipartFile multipartFile) throws IOException {
         User loginUser = authService.getLoginUser();
 
-        Diary diary = verifiedDiary(diaryId);
+        Diary diary = findDiaryOrThrow(diaryId);
 
         DiaryImage savedDiaryImage = diaryImageRepository.save(DiaryImage.builder()
                 .image(diaryRepository.getReferenceById(diaryId))
                 .build());
 
-        verifyDiaryOwner(diary, loginUser);
+        checkDiaryOwnership(diary, loginUser);
 
         String imageUrl = objectStorageService.uploadDiaryImage(diary.getDiaryId(), savedDiaryImage.getImageId(), multipartFile);
 
