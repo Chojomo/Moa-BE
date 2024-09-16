@@ -1,6 +1,8 @@
 package com.moa.domain.member.service.impl;
 
 import com.moa.domain.member.entity.User;
+import com.moa.domain.member.exception.UserException;
+import com.moa.domain.member.exception.UserExceptionCode;
 import com.moa.domain.member.repository.UserRepository;
 import com.moa.domain.member.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
     public User findUserOrThrow(UUID userId) {
         Optional<User> optionalUser = userRepository.findById(userId);
-        return optionalUser.orElseThrow();
+        return optionalUser.orElseThrow(() -> new UserException(UserExceptionCode.USER_NOT_EXISTS));
     }
 
 }
