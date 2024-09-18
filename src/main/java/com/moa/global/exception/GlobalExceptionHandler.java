@@ -12,7 +12,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BaseException.class)
     public ResponseEntity<ErrorResponse> handleBaseException(BaseException exception) {
         ErrorResponse errorResponse = ErrorResponse.of(exception.getBaseExceptionCode());
-        return ResponseEntity.status(errorResponse.getHttpStatus()).body(errorResponse);
+        return ResponseEntity.status(errorResponse.getStatus()).body(errorResponse);
     }
 
 }
