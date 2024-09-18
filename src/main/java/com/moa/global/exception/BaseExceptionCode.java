@@ -1,11 +1,8 @@
 package com.moa.global.exception;
 
-import lombok.Getter;
-import org.springframework.http.HttpStatus;
-
 public interface BaseExceptionCode {
 
-    HttpStatus getHttpStatus();
+    Integer getStatus();
     String getMessage();
     String getErrorCode();
 
