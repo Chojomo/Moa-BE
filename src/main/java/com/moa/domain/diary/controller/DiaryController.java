@@ -21,31 +21,31 @@ public class DiaryController {
 
     @PostMapping("/initialize")
     public ResponseEntity<SingleResponseDto<DiaryDto.InitializeDiaryResponse>> initializeDiary() {
-        return new ResponseEntity<>(new SingleResponseDto<>(diaryService.initializeDiary()), HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value(), diaryService.initializeDiary()), HttpStatus.OK);
     }
 
     @PostMapping("/{diaryId}/image")
     public ResponseEntity<SingleResponseDto<DiaryDto.CreateDiaryImageResponse>> createDiaryImage(@PathVariable UUID diaryId,
                                                                                                  @RequestPart(value = "image") MultipartFile multipartFile) throws IOException {
         DiaryDto.CreateDiaryImageResponse diaryImage = diaryService.createDiaryImage(diaryId, multipartFile);
-        return new ResponseEntity<>(new SingleResponseDto<>(diaryImage), HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value(), diaryImage), HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<Void> updateDiary(@RequestBody DiaryDto.UpdateDiaryRequest req) {
+    public ResponseEntity<SingleResponseDto<Integer>> updateDiary(@RequestBody DiaryDto.UpdateDiaryRequest req) {
         diaryService.updateDiary(req);
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.CREATED.value()), HttpStatus.CREATED);
     }
 
     @GetMapping("/{diaryId}")
     public ResponseEntity<SingleResponseDto<DiaryDto.GetDiaryResponse>> getDiaryDetails(@PathVariable UUID diaryId) {
-        return new ResponseEntity<>(new SingleResponseDto<>(diaryService.getDiaryDetails(diaryId)), HttpStatus.OK);
+        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value(), diaryService.getDiaryDetails(diaryId)), HttpStatus.OK);
     }
 
     @PostMapping("/publish")
-    public ResponseEntity<Void> publishDiary(@RequestBody DiaryDto.PublishDiaryRequest req) {
+    public ResponseEntity<SingleResponseDto<Integer>> publishDiary(@RequestBody DiaryDto.PublishDiaryRequest req) {
         diaryService.publishDiary(req);
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value()), HttpStatus.OK);
     }
 
 }
