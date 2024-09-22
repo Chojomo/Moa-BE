@@ -2,6 +2,7 @@ package com.moa.domain.diary.controller;
 
 import com.moa.domain.diary.dto.DiaryDto;
 import com.moa.domain.diary.service.DiaryService;
+import com.moa.global.dto.MultiResponseDto;
 import com.moa.global.dto.SingleResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -46,6 +47,14 @@ public class DiaryController {
     public ResponseEntity<SingleResponseDto<Integer>> publishDiary(@RequestBody DiaryDto.PublishDiaryRequest req) {
         diaryService.publishDiary(req);
         return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value()), HttpStatus.OK);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<MultiResponseDto> getDiaryList(@RequestParam(defaultValue = "0") Integer pageNumber,
+                                                         @RequestParam(defaultValue = "10") Integer pageSize) {
+        MultiResponseDto<?> diaryList = diaryService.getDiaryList(pageNumber, pageSize);
+
+        return new ResponseEntity<>(diaryList, HttpStatus.OK);
     }
 
 }
