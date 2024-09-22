@@ -3,6 +3,8 @@ package com.moa.domain.diary.dto;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 public class DiaryDto {
@@ -47,6 +49,24 @@ public class DiaryDto {
         private String diaryContents;
         private String diaryThumbnail;
         private Boolean isDiaryPublic;
+    }
+
+    @Data
+    @Builder
+    public static class GetDiaryListResponse {
+        private List<DiaryPreview> diaryPreviewList;
+    }
+
+    @Data
+    @Builder
+    public static class DiaryPreview {
+        private UUID diaryId;
+        private UUID diaryAuthorId;
+        private String diaryAuthorNickname;
+        private String diaryThumbnail;
+        private String diaryTitle;
+        private String diaryContents;
+        private LocalDate diaryPublishedAt;
     }
 
 }

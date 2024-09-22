@@ -8,17 +8,25 @@ import com.moa.domain.diary.repository.DiaryImageRepository;
 import com.moa.domain.diary.repository.DiaryRepository;
 import com.moa.domain.diary.service.DiaryService;
 import com.moa.domain.member.entity.User;
+import com.moa.global.dto.MultiResponseDto;
 import com.moa.global.security.service.AuthService;
 import com.moa.global.storage.service.ObjectStorageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -104,6 +112,20 @@ public class DiaryServiceImpl implements DiaryService {
         checkDiaryOwnership(diary, loginUser);
 
         diary.publishDiary(req.getDiaryTitle(), req.getDiaryContents(), req.getDiaryThumbnail(), req.getIsDiaryPublic());
+    }
+
+    @Override
+    public MultiResponseDto<?> getDiaryList(Integer pageNumber, Integer pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+        Page<Diary> diaryPage = diaryRepository.findAllWithUser(pageable);
+
+        DiaryDto.GetDiaryListResponse getDiaryListResponse = DiaryDto.GetDiaryListResponse.builder().diaryPreviewList(diaryPage.getContent().stream()
+                        .map(diaryMapper::diaryTodiaryPreview)
+                        .collect(Collectors.toList()))
+                .build();
+
+        return new MultiResponseDto<>(HttpStatus.OK.value(), getDiaryListResponse, diaryPage);
     }
 
     public Diary findDiaryOrThrow(UUID diaryId) {

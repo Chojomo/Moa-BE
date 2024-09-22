@@ -4,6 +4,8 @@ import com.moa.domain.diary.dto.DiaryDto;
 import com.moa.domain.diary.entity.Diary;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 public class DiaryMapper {
 
@@ -15,6 +17,18 @@ public class DiaryMapper {
                 .diaryContents(diary.getDiaryContents())
                 .diaryThumbnail(diary.getDiaryThumbnail())
                 .isDiaryPublic(diary.getIsDairyPublic())
+                .build();
+    }
+
+    public DiaryDto.DiaryPreview diaryTodiaryPreview(Diary diary) {
+        return DiaryDto.DiaryPreview.builder()
+                .diaryId(diary.getDiaryId())
+                .diaryAuthorId(diary.getUser().getUserId())
+                .diaryAuthorNickname(diary.getUser().getUserNickname())
+                .diaryThumbnail(diary.getDiaryThumbnail())
+                .diaryTitle(diary.getDiaryTitle())
+                .diaryContents(diary.getDiaryContents())
+                .diaryPublishedAt(LocalDate.from(diary.getPublishedAt()))
                 .build();
     }
 

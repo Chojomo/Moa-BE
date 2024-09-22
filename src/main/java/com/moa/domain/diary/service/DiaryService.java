@@ -1,6 +1,7 @@
 package com.moa.domain.diary.service;
 
 import com.moa.domain.diary.dto.DiaryDto;
+import com.moa.global.dto.MultiResponseDto;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -17,5 +18,7 @@ public interface DiaryService {
     DiaryDto.GetDiaryResponse getDiaryDetails(UUID diaryId);
 
     void publishDiary(DiaryDto.PublishDiaryRequest req);
+
+    MultiResponseDto<?> getDiaryList(Integer pageNumber, Integer pageSize);
 
 }
