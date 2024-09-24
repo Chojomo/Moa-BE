@@ -4,7 +4,7 @@ import com.moa.domain.diary.dto.DiaryDto;
 import com.moa.domain.diary.entity.Diary;
 import com.moa.domain.diary.entity.DiaryImage;
 import com.moa.domain.diary.mapper.DiaryMapper;
-import com.moa.domain.diary.repository.DiaryImageRepository;
+import com.moa.domain.diary.repository.diaryImage.DiaryImageRepository;
 import com.moa.domain.diary.repository.DiaryRepository;
 import com.moa.domain.diary.service.DiaryService;
 import com.moa.domain.member.entity.User;
@@ -16,14 +16,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -64,6 +62,8 @@ public class DiaryServiceImpl implements DiaryService {
 
         Diary diary = findDiaryOrThrow(diaryId);
 
+        boolean isDiaryExists = diaryImageRepository.existsByDiaryId(diaryId);
+
         DiaryImage savedDiaryImage = diaryImageRepository.save(DiaryImage.builder()
                 .image(diaryRepository.getReferenceById(diaryId))
                 .build());
@@ -71,6 +71,10 @@ public class DiaryServiceImpl implements DiaryService {
         checkDiaryOwnership(diary, loginUser);
 
         String imageUrl = objectStorageService.uploadDiaryImage(diary.getDiaryId(), savedDiaryImage.getImageId(), multipartFile);
+
+        if (!isDiaryExists) {
+            diary.updateDiaryThumbnail(imageUrl);
+        }
 
         savedDiaryImage.updateImageUrl(imageUrl);
 

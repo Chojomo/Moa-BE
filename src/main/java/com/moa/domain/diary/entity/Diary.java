@@ -87,4 +87,8 @@ public class Diary extends TimeStamped {
         this.publishedAt = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
     }
 
+    public void updateDiaryThumbnail(String diaryThumbnail) {
+        this.diaryThumbnail = diaryThumbnail;
+    }
+
 }

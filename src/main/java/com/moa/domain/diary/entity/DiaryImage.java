@@ -27,12 +27,12 @@ public class DiaryImage extends CreatedAt {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "diary_uuid")
     @Comment("다이어리 UUID")
-    private Diary image;
+    private Diary diary;
 
     @Builder
     public DiaryImage(String imageUrl, Diary image) {
         this.imageUrl = imageUrl;
-        this.image = image;
+        this.diary = image;
     }
 
     public void updateImageUrl(String imageUrl) {
