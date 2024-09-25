@@ -9,6 +9,8 @@ import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -52,6 +54,10 @@ public class Diary extends TimeStamped {
     @Column(name = "published_at")
     @Comment("게시 날짜")
     private LocalDateTime publishedAt;
+
+    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Comment("다이어리 이미지 리스트")
+    private List<DiaryImage> diaryImages = new ArrayList<>();
 
     @Builder
     public Diary(String diaryThumbnail, String diaryTitle, String diaryContents, Boolean isDairyPublic, Byte diaryStatus, User user) {
