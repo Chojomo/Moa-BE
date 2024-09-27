@@ -1,6 +1,7 @@
-package com.moa.domain.diary.entity;
+package com.moa.domain.diary.diaryimage.entity;
 
 import com.moa.domain.common.CreatedAt;
+import com.moa.domain.diary.diary.entity.Diary;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;

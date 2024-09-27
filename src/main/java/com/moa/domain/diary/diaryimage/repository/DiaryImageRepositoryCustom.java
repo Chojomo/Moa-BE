@@ -1,4 +1,4 @@
-package com.moa.domain.diary.repository.diaryImage;
+package com.moa.domain.diary.diaryimage.repository;
 
 import java.util.UUID;
 

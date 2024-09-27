@@ -1,7 +1,7 @@
-package com.moa.domain.diary.mapper;
+package com.moa.domain.diary.diary.mapper;
 
-import com.moa.domain.diary.dto.DiaryDto;
-import com.moa.domain.diary.entity.Diary;
+import com.moa.domain.diary.diary.dto.DiaryDto;
+import com.moa.domain.diary.diary.entity.Diary;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;

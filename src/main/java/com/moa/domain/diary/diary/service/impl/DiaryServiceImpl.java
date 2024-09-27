@@ -1,12 +1,12 @@
-package com.moa.domain.diary.service.impl;
+package com.moa.domain.diary.diary.service.impl;
 
-import com.moa.domain.diary.dto.DiaryDto;
-import com.moa.domain.diary.entity.Diary;
-import com.moa.domain.diary.entity.DiaryImage;
-import com.moa.domain.diary.mapper.DiaryMapper;
-import com.moa.domain.diary.repository.diaryImage.DiaryImageRepository;
-import com.moa.domain.diary.repository.DiaryRepository;
-import com.moa.domain.diary.service.DiaryService;
+import com.moa.domain.diary.diary.dto.DiaryDto;
+import com.moa.domain.diary.diary.entity.Diary;
+import com.moa.domain.diary.diary.service.DiaryService;
+import com.moa.domain.diary.diaryimage.entity.DiaryImage;
+import com.moa.domain.diary.diary.mapper.DiaryMapper;
+import com.moa.domain.diary.diaryimage.repository.DiaryImageRepository;
+import com.moa.domain.diary.diary.repository.DiaryRepository;
 import com.moa.domain.member.entity.User;
 import com.moa.global.dto.MultiResponseDto;
 import com.moa.global.security.service.AuthService;

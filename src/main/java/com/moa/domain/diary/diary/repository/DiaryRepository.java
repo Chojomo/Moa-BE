@@ -1,6 +1,6 @@
-package com.moa.domain.diary.repository;
+package com.moa.domain.diary.diary.repository;
 
-import com.moa.domain.diary.entity.Diary;
+import com.moa.domain.diary.diary.entity.Diary;
 import com.moa.domain.member.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

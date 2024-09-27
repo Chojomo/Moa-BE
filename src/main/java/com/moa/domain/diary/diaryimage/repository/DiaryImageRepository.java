@@ -1,8 +1,7 @@
-package com.moa.domain.diary.repository.diaryImage;
+package com.moa.domain.diary.diaryimage.repository;
 
-import com.moa.domain.diary.entity.DiaryImage;
+import com.moa.domain.diary.diaryimage.entity.DiaryImage;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 

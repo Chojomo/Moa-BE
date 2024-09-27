@@ -1,4 +1,4 @@
-package com.moa.domain.diary.repository.diaryImage;
+package com.moa.domain.diary.diaryimage.repository;
 
 import com.moa.domain.diary.entity.QDiaryImage;
 import com.querydsl.jpa.impl.JPAQueryFactory;

@@ -1,7 +1,7 @@
-package com.moa.domain.diary.controller;
+package com.moa.domain.diary.diary.controller;
 
-import com.moa.domain.diary.dto.DiaryDto;
-import com.moa.domain.diary.service.DiaryService;
+import com.moa.domain.diary.diary.dto.DiaryDto;
+import com.moa.domain.diary.diary.service.DiaryService;
 import com.moa.global.dto.MultiResponseDto;
 import com.moa.global.dto.SingleResponseDto;
 import lombok.RequiredArgsConstructor;

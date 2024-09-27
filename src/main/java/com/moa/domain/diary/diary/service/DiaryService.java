@@ -1,6 +1,6 @@
-package com.moa.domain.diary.service;
+package com.moa.domain.diary.diary.service;
 
-import com.moa.domain.diary.dto.DiaryDto;
+import com.moa.domain.diary.diary.dto.DiaryDto;
 import com.moa.global.dto.MultiResponseDto;
 import org.springframework.web.multipart.MultipartFile;
 
