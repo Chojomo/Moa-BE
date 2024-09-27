@@ -1,4 +1,4 @@
-package com.moa.domain.diary.dto;
+package com.moa.domain.diary.diary.dto;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,7 @@
-package com.moa.domain.diary.entity;
+package com.moa.domain.diary.diary.entity;
 
 import com.moa.domain.common.TimeStamped;
+import com.moa.domain.diary.diaryimage.entity.DiaryImage;
 import com.moa.domain.member.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
