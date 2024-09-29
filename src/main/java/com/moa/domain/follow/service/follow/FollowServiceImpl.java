@@ -30,15 +30,15 @@ public class FollowServiceImpl implements FollowService {
 
         User user = userService.findUserOrThrow(userId);
 
-        if (followRepository.findFollowByFollowerAndFollowing(loginUser, user).isEmpty()) {
-            followRepository.save(Follow.builder()
-                    .follower(loginUser)
-                    .following(user)
-                    .followedAt(LocalDateTime.now())
-                    .build());
-        } else {
-            log.info("이미 팔로우한 사용자입니다.");
-        }
+        followRepository.findFollowByFollowerAndFollowing(loginUser, user)
+                .ifPresentOrElse(followRepository::delete,
+                        () -> followRepository.save(
+                                Follow.builder()
+                                        .follower(loginUser)
+                                        .following(user)
+                                        .followedAt(LocalDateTime.now())
+                                        .build()
+                        ));
     }
 
 }
