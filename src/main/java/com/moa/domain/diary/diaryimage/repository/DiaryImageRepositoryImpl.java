@@ -1,6 +1,6 @@
 package com.moa.domain.diary.diaryimage.repository;
 
-import com.moa.domain.diary.entity.QDiaryImage;
+import com.moa.domain.diary.diaryimage.entity.QDiaryImage;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

@@ -7,6 +7,7 @@ import com.moa.domain.diary.diaryimage.entity.DiaryImage;
 import com.moa.domain.diary.diary.mapper.DiaryMapper;
 import com.moa.domain.diary.diaryimage.repository.DiaryImageRepository;
 import com.moa.domain.diary.diary.repository.DiaryRepository;
+import com.moa.domain.diary.diarylike.service.DiaryLikeService;
 import com.moa.domain.member.entity.User;
 import com.moa.global.dto.MultiResponseDto;
 import com.moa.global.security.service.AuthService;
@@ -37,6 +38,7 @@ public class DiaryServiceImpl implements DiaryService {
     private final AuthService authService;
     private final ObjectStorageService objectStorageService;
     private final DiaryMapper diaryMapper;
+    private final DiaryLikeService diaryLikeService;
 
     @Override
     public DiaryDto.InitializeDiaryResponse initializeDiary() {
@@ -130,6 +132,15 @@ public class DiaryServiceImpl implements DiaryService {
                 .build();
 
         return new MultiResponseDto<>(HttpStatus.OK.value(), getDiaryListResponse, diaryPage);
+    }
+
+    @Override
+    public void toggleLikeOnDiary(UUID diaryId) {
+        User loginUser = authService.getLoginUser();
+
+        Diary diary = findDiaryOrThrow(diaryId);
+
+        diaryLikeService.toggleLikeOnDiary(loginUser, diary);
     }
 
     public Diary findDiaryOrThrow(UUID diaryId) {

@@ -23,7 +23,7 @@ public class Diary extends TimeStamped {
 
     @Id
     @UuidGenerator
-    @Column(name = "diary_uuid", columnDefinition = "BINARY(16)",  updatable = false, nullable = false)
+    @Column(name = "diary_id", columnDefinition = "BINARY(16)",  updatable = false, nullable = false)
     @Comment("다이어리 UUID")
     private UUID diaryId;
 
