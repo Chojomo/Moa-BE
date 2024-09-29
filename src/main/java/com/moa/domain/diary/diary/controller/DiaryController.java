@@ -57,4 +57,10 @@ public class DiaryController {
         return new ResponseEntity<>(diaryList, HttpStatus.OK);
     }
 
+    @GetMapping("/like/{diaryId}")
+    public ResponseEntity<SingleResponseDto> toggleLikeOnDiary(@PathVariable UUID diaryId) {
+        diaryService.toggleLikeOnDiary(diaryId);
+        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value()), HttpStatus.OK);
+    }
+
 }

@@ -21,4 +21,6 @@ public interface DiaryService {
 
     MultiResponseDto<?> getDiaryList(Integer pageNumber, Integer pageSize);
 
+    void toggleLikeOnDiary(UUID diaryId);
+
 }

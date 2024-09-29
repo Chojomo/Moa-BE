@@ -19,7 +19,7 @@ public class User extends CreatedAt {
 
     @Id
     @UuidGenerator
-    @Column(name = "user_uuid", columnDefinition = "BINARY(16)",  updatable = false, nullable = false)
+    @Column(name = "user_id", columnDefinition = "BINARY(16)",  updatable = false, nullable = false)
     @Comment("유저 UUID")
     private UUID userId;
 
@@ -52,7 +52,7 @@ public class User extends CreatedAt {
     private String userIntroduce;
 
     @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "USER_ROLES", joinColumns = @JoinColumn(name = "user_uuid"))
+    @CollectionTable(name = "USER_ROLES", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "user_role")
     @Comment("사용자 권한")
     private List<String> roles = new ArrayList<>();

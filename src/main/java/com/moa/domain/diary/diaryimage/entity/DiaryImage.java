@@ -26,7 +26,7 @@ public class DiaryImage extends CreatedAt {
     private String imageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "diary_uuid")
+    @JoinColumn(name = "diary_id")
     @Comment("다이어리 UUID")
     private Diary diary;
 
