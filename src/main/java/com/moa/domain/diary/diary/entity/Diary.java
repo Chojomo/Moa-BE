@@ -2,6 +2,7 @@ package com.moa.domain.diary.diary.entity;
 
 import com.moa.domain.common.TimeStamped;
 import com.moa.domain.diary.diaryimage.entity.DiaryImage;
+import com.moa.domain.diary.diarylike.entity.DiaryLike;
 import com.moa.domain.member.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -57,8 +58,12 @@ public class Diary extends TimeStamped {
     private LocalDateTime publishedAt;
 
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Comment("다이어리 이미지 리스트")
-    private List<DiaryImage> diaryImages = new ArrayList<>();
+    @Comment("다이어리 이미지 식별 ID")
+    private List<DiaryImage> diaryImageList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "diary")
+    @Comment("다이어리 좋아요 식별 ID")
+    private List<DiaryLike> diaryLikeList = new ArrayList<>();
 
     @Builder
     public Diary(String diaryThumbnail, String diaryTitle, String diaryContents, Boolean isDairyPublic, Byte diaryStatus, User user) {
