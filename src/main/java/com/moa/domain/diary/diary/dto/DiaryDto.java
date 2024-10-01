@@ -67,6 +67,7 @@ public class DiaryDto {
         private String diaryTitle;
         private String diaryContents;
         private LocalDate diaryPublishedAt;
+        private Integer likeCount;
     }
 
 }
