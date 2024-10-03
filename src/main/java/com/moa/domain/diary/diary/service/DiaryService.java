@@ -1,6 +1,7 @@
 package com.moa.domain.diary.diary.service;
 
 import com.moa.domain.diary.diary.dto.DiaryDto;
+import com.moa.domain.diary.diarylike.dto.DiaryLikeDto;
 import com.moa.global.dto.MultiResponseDto;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,5 +23,7 @@ public interface DiaryService {
     MultiResponseDto<?> getDiaryList(Integer pageNumber, Integer pageSize);
 
     void toggleLikeOnDiary(UUID diaryId);
+
+    DiaryLikeDto.GetDiaryLikesResponse getDiaryLikes(UUID diaryId);
 
 }

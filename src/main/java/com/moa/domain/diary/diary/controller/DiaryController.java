@@ -2,6 +2,7 @@ package com.moa.domain.diary.diary.controller;
 
 import com.moa.domain.diary.diary.dto.DiaryDto;
 import com.moa.domain.diary.diary.service.DiaryService;
+import com.moa.domain.diary.diarylike.dto.DiaryLikeDto;
 import com.moa.global.dto.MultiResponseDto;
 import com.moa.global.dto.SingleResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -57,10 +58,15 @@ public class DiaryController {
         return new ResponseEntity<>(diaryList, HttpStatus.OK);
     }
 
-    @GetMapping("/like/{diaryId}")
+    @PostMapping("/like/{diaryId}")
     public ResponseEntity<SingleResponseDto> toggleLikeOnDiary(@PathVariable UUID diaryId) {
         diaryService.toggleLikeOnDiary(diaryId);
         return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value()), HttpStatus.OK);
+    }
+
+    @GetMapping("/like/{diaryId}")
+    public ResponseEntity<SingleResponseDto<DiaryLikeDto.GetDiaryLikesResponse>> getDiaryLikes(@PathVariable UUID diaryId) {
+        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value(), diaryService.getDiaryLikes(diaryId)), HttpStatus.OK);
     }
 
 }
