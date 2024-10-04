@@ -26,7 +26,6 @@ public class DiaryDto {
         private UUID diaryId;
         private String diaryTitle;
         private String diaryContents;
-        private String thumbnail;
         private Boolean isDiaryPublic;
     }
 
