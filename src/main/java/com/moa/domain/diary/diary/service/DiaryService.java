@@ -26,4 +26,6 @@ public interface DiaryService {
 
     DiaryLikeDto.GetDiaryLikesResponse getDiaryLikes(UUID diaryId);
 
+    DiaryDto.UploadThumbnailResponse uploadThumbnail(UUID diaryId, MultipartFile multipartFile) throws IOException;
+
 }

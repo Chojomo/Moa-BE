@@ -69,4 +69,10 @@ public class DiaryController {
         return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value(), diaryService.getDiaryLikes(diaryId)), HttpStatus.OK);
     }
 
+    @PostMapping("/{diaryId}/thumbnail")
+    public ResponseEntity<SingleResponseDto<DiaryDto.UploadThumbnailResponse>> uploadThumbnail(@PathVariable UUID diaryId,
+                                                                                                 @RequestPart(value = "image") MultipartFile multipartFile) throws IOException {
+        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value(), diaryService.uploadThumbnail(diaryId, multipartFile)), HttpStatus.OK);
+    }
+
 }

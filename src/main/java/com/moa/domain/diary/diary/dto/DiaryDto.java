@@ -58,6 +58,12 @@ public class DiaryDto {
 
     @Data
     @Builder
+    public static class UploadThumbnailResponse {
+        private String thumbnailUrl;
+    }
+
+    @Data
+    @Builder
     public static class DiaryPreview {
         private UUID diaryId;
         private UUID diaryAuthorId;

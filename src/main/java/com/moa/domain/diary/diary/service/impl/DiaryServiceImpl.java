@@ -151,6 +151,28 @@ public class DiaryServiceImpl implements DiaryService {
         return diaryLikeService.getDiaryLikes(diary);
     }
 
+    @Override
+    public DiaryDto.UploadThumbnailResponse uploadThumbnail(UUID diaryId, MultipartFile multipartFile) throws IOException {
+        User loginUser = authService.getLoginUser();
+
+        Diary diary = findDiaryOrThrow(diaryId);
+
+        checkDiaryOwnership(diary, loginUser);
+
+        DiaryImage savedDiaryImage = diaryImageRepository.save(DiaryImage.builder()
+                .image(diaryRepository.getReferenceById(diaryId))
+                .build());
+
+        String thumbnailUrl = objectStorageService.uploadDiaryImage(diary.getDiaryId(), savedDiaryImage.getImageId(), multipartFile);
+
+        savedDiaryImage.updateImageUrl(thumbnailUrl);
+
+        diary.updateDiaryThumbnail(thumbnailUrl);
+
+        return DiaryDto.UploadThumbnailResponse.builder()
+                .thumbnailUrl(thumbnailUrl)
+                .build();
+    }
 
     public Diary findDiaryOrThrow(UUID diaryId) {
         Optional<Diary> optionalDiary = diaryRepository.findById(diaryId);
