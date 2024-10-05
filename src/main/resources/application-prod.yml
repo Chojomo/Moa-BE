@@ -80,6 +80,9 @@ cloud:
     region:
       static: ${MOA_AWS_REGION}
 
+logging:
+  config: classpath:logback-prod.xml
+
 jwt:
   key: ${MOA_JWT_SECRET_KEY}
   access-token-expiration-minutes: ${MOA_ACCESS_TOKEN_EXP}

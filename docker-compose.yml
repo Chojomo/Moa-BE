@@ -7,6 +7,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8081:8081
+    volumes:
+      - ~/ichubtou/docker/moa:/logs/
     environment:
       MOA_SERVER: ${MOA_SERVER}
       MOA_AWS_ACCESS_KEY: ${MOA_AWS_ACCESS_KEY}
