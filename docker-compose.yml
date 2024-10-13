@@ -30,3 +30,16 @@ services:
       MOA_REFRESH_TOKEN_EXP: ${MOA_REFRESH_TOKEN_EXP}
       MOA_GOOGLE_CLIENT_ID: ${MOA_GOOGLE_CLIENT_ID}
       MOA_GOOGLE_CLIENT_SECRET: ${MOA_GOOGLE_CLIENT_SECRET}
+    labels:
+      - "traefik.http.routers.spring.rule=Host(`moa.ichubtou.com`)"
+      - "traefik.http.routers.spring.entrypoints=websecure"
+      - "traefik.http.routers.spring.tls.certresolver=myresolver"
+      - "traefik.http.services.spring.loadbalancer.server.port=8081"
+      - "traefik.http.routers.spring-secure.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
+    networks:
+      - traefik-network
+networks:
+  traefik-network:
+    external: true
