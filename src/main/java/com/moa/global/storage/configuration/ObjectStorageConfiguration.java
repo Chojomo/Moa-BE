@@ -33,6 +33,7 @@ public class ObjectStorageConfiguration {
                 .region(Region.of(region))
                 .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create(accessKey, secretKey)))
                 .endpointOverride(URI.create(endpoint))
+                .forcePathStyle(true)
                 .build();
     }
 
