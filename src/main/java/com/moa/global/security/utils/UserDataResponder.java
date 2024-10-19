@@ -22,6 +22,7 @@ public class UserDataResponder {
                 .status(HttpStatus.OK.value())
                 .data(
                 UserDataResponse.builder()
+                        .userId(user.getUserId())
                         .userNickname(user.getUserNickname())
                         .build()
         ).build();
