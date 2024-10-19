@@ -7,6 +7,7 @@ import java.util.UUID;
 @Builder
 public class UserDataResponse {
 
+    private UUID userId;
     private String userNickname;
 
 }
