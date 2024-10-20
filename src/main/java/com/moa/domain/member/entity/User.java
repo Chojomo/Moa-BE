@@ -1,6 +1,8 @@
 package com.moa.domain.member.entity;
 
 import com.moa.domain.common.CreatedAt;
+import com.moa.domain.follow.entity.Follow;
+import com.zaxxer.hikari.util.FastList;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -60,6 +62,14 @@ public class User extends CreatedAt {
     @Column(name = "last_active_time")
     @Comment("마지막 활동 시간")
     private LocalDateTime lastActiveTime;
+
+    @OneToMany(mappedBy = "follower")
+    @Comment("팔로워 식별 ID")
+    private List<Follow> followerList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "following")
+    @Comment("팔로잉 식별 ID")
+    private List<Follow> followingList = new ArrayList<>();;
 
     @Builder
     public User(String userEmail, String userPassword, String username, String userNickname, String userEmailType, String userProfileImage, String userIntroduce, List<String> roles, LocalDateTime lastActiveTime) {

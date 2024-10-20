@@ -22,6 +22,16 @@ public class UserMapper {
                 .build();
     }
 
+    public UserDto.GetUserMyPageResponse toUserMyPageResponse(User user, Boolean isMyPage) {
+        return UserDto.GetUserMyPageResponse.builder()
+                .userProfileImage(user.getUserProfileImage())
+                .userNickname(user.getUserNickname())
+                .followerCount(user.getFollowerList().size())
+                .followingCount(user.getFollowingList().size())
+                .isMyPage(isMyPage)
+                .build();
+    }
+
     public String getUsernameFromEmail(String email) {
         return email.substring(0, email.indexOf('@'));
     }
