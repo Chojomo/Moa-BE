@@ -8,11 +8,14 @@ import com.moa.domain.member.mapper.UserMapper;
 import com.moa.domain.member.repository.UserRepository;
 import com.moa.domain.member.service.UserService;
 import com.moa.global.security.service.AuthService;
+import com.moa.global.storage.service.ObjectStorageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,6 +28,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AuthService authService;
     private final UserMapper userMapper;
+    private final ObjectStorageService objectStorageService;
 
     public User findUserOrThrow(UUID userId) {
         Optional<User> optionalUser = userRepository.findById(userId);
@@ -48,6 +52,15 @@ public class UserServiceImpl implements UserService {
         }
 
         return userMapper.toUserMyPageResponse(user, isMyPage);
+    }
+
+    @Override
+    public void updateProfileImage(MultipartFile multipartFile) throws IOException {
+        User loginUser = authService.getLoginUser();
+
+        String imageUrl = objectStorageService.uploadProfileImage(loginUser.getUserId(), multipartFile);
+
+        loginUser.updateProfileImage(imageUrl);
     }
 
 }

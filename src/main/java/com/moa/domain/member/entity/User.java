@@ -84,4 +84,8 @@ public class User extends CreatedAt {
         this.lastActiveTime = lastActiveTime;
     }
 
+    public void updateProfileImage(String userProfileImage) {
+        this.userProfileImage = userProfileImage;
+    }
+
 }
