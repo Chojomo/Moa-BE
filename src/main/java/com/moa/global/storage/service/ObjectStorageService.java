@@ -48,4 +48,30 @@ public class ObjectStorageService {
         return String.valueOf(s3Client.utilities().getUrl(getUrlRequest));
     }
 
+    public String uploadProfileImage(UUID userId, MultipartFile multipartFile) throws IOException {
+        String fileName = multipartFile.getOriginalFilename();
+        String folderPath = "users/" + userId + "/";
+
+        String fileDirectory = folderPath + fileName;
+
+        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                .bucket(bucket)
+                .contentType(multipartFile.getContentType())
+                .contentLength(multipartFile.getSize())
+                .key(fileDirectory)
+                .metadata(Collections.singletonMap("Content-Disposition", "inline"))
+                .build();
+
+        RequestBody requestBody = RequestBody.fromBytes(multipartFile.getBytes());
+
+        s3Client.putObject(putObjectRequest, requestBody);
+
+        GetUrlRequest getUrlRequest = GetUrlRequest.builder()
+                .bucket(bucket)
+                .key(fileDirectory)
+                .build();
+
+        return String.valueOf(s3Client.utilities().getUrl(getUrlRequest));
+    }
+
 }
