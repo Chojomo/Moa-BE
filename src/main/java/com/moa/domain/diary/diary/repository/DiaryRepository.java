@@ -19,6 +19,14 @@ public interface DiaryRepository extends JpaRepository<Diary, UUID> {
 
     @EntityGraph(attributePaths = {"user", "diaryLikeList"})
     @Query("SELECT d FROM DIARY d WHERE d.diaryStatus = 2 ORDER BY d.publishedAt DESC")
-    Page<Diary> findAllWithUser(Pageable pageable);
+    Page<Diary> findAllWithUserOrderByPublishedAt(Pageable pageable);
+
+    @EntityGraph(attributePaths = {"user", "diaryLikeList"})
+    @Query("SELECT d FROM DIARY d WHERE d.diaryStatus = 2 ORDER BY d.totalLikes DESC")
+    Page<Diary> findAllWithUserOrderByTotalLikes(Pageable pageable);
+
+    @EntityGraph(attributePaths = {"user", "diaryLikeList"})
+    @Query("SELECT d FROM DIARY d WHERE d.diaryStatus = 2 ORDER BY d.viewCounts DESC")
+    Page<Diary> findAllWithUserOrderByViewCounts(Pageable pageable);
 
 }

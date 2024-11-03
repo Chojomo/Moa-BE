@@ -9,6 +9,7 @@ import com.moa.domain.diary.diaryimage.repository.DiaryImageRepository;
 import com.moa.domain.diary.diary.repository.DiaryRepository;
 import com.moa.domain.diary.diarylike.dto.DiaryLikeDto;
 import com.moa.domain.diary.diarylike.service.DiaryLikeService;
+import com.moa.domain.diary.enums.DiarySortType;
 import com.moa.domain.member.entity.User;
 import com.moa.global.dto.MultiResponseDto;
 import com.moa.global.security.service.AuthService;
@@ -107,6 +108,10 @@ public class DiaryServiceImpl implements DiaryService {
             throw new RuntimeException();
         }
 
+        diary.incrementViewCounts();
+
+        diaryRepository.save(diary);
+
         return diaryMapper.diaryToGetDiaryResponse(diary);
     }
 
@@ -122,10 +127,18 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public MultiResponseDto<?> getDiaryList(Integer pageNumber, Integer pageSize) {
+    public MultiResponseDto<?> getDiaryList(Integer pageNumber, Integer pageSize, DiarySortType sortType) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
-        Page<Diary> diaryPage = diaryRepository.findAllWithUser(pageable);
+        Page<Diary> diaryPage = null;
+
+        if (sortType.equals(DiarySortType.PUBLISHED_AT)) {
+            diaryPage = diaryRepository.findAllWithUserOrderByPublishedAt(pageable);
+        } else if (sortType.equals(DiarySortType.TOTAL_LIKES)) {
+            diaryPage = diaryRepository.findAllWithUserOrderByTotalLikes(pageable);
+        } else if (sortType.equals(DiarySortType.VIEW_COUNT)) {
+            diaryPage = diaryRepository.findAllWithUserOrderByViewCounts(pageable);
+        }
 
         DiaryDto.GetDiaryListResponse getDiaryListResponse = DiaryDto.GetDiaryListResponse.builder().diaryPreviewList(diaryPage.getContent().stream()
                         .map(diaryMapper::diaryTodiaryPreview)
