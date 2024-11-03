@@ -141,7 +141,15 @@ public class DiaryServiceImpl implements DiaryService {
 
         Diary diary = findDiaryOrThrow(diaryId);
 
-        diaryLikeService.toggleLikeOnDiary(loginUser, diary);
+        boolean isLiked = diaryLikeService.toggleLikeOnDiary(loginUser, diary);
+
+        if (isLiked) {
+            diary.incrementTotalLikes();
+        } else {
+            diary.decrementTotalLikes();
+        }
+
+        diaryRepository.save(diary);
     }
 
     @Override

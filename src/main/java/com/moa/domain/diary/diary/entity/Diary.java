@@ -53,6 +53,10 @@ public class Diary extends TimeStamped {
     @Comment("유저 UUID")
     private User user;
 
+    @Column(name = "total_likes")
+    @Comment("총 좋아요 수")
+    private Long totalLikes = 0L;
+
     @Column(name = "published_at")
     @Comment("게시 날짜")
     private LocalDateTime publishedAt;
@@ -100,6 +104,16 @@ public class Diary extends TimeStamped {
 
     public void updateDiaryThumbnail(String diaryThumbnail) {
         this.diaryThumbnail = diaryThumbnail;
+    }
+
+    public void incrementTotalLikes() {
+        this.totalLikes++;
+    }
+
+    public void decrementTotalLikes() {
+        if (this.totalLikes > 0) {
+            this.totalLikes--;
+        }
     }
 
 }
