@@ -48,6 +48,10 @@ public class Diary extends TimeStamped {
     @Comment("다이어리 상태 0: 초기화, 1: 임시저장, 2: 저장 완료")
     private Byte diaryStatus;
 
+    @Column(name = "view_counts")
+    @Comment("다이어리 조회수")
+    private Long viewCounts;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_uuid")
     @Comment("유저 UUID")
@@ -114,6 +118,10 @@ public class Diary extends TimeStamped {
         if (this.totalLikes > 0) {
             this.totalLikes--;
         }
+    }
+
+    public void incrementViewCounts() {
+        this.viewCounts++;
     }
 
 }

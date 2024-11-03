@@ -3,6 +3,7 @@ package com.moa.domain.diary.diary.controller;
 import com.moa.domain.diary.diary.dto.DiaryDto;
 import com.moa.domain.diary.diary.service.DiaryService;
 import com.moa.domain.diary.diarylike.dto.DiaryLikeDto;
+import com.moa.domain.diary.enums.DiarySortType;
 import com.moa.global.dto.MultiResponseDto;
 import com.moa.global.dto.SingleResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -52,8 +53,9 @@ public class DiaryController {
 
     @GetMapping("/list")
     public ResponseEntity<MultiResponseDto> getDiaryList(@RequestParam(defaultValue = "0") Integer pageNumber,
-                                                         @RequestParam(defaultValue = "10") Integer pageSize) {
-        MultiResponseDto<?> diaryList = diaryService.getDiaryList(pageNumber, pageSize);
+                                                         @RequestParam(defaultValue = "10") Integer pageSize,
+                                                         @RequestParam(defaultValue = "PUBLISHED_AT") DiarySortType sortType) {
+        MultiResponseDto<?> diaryList = diaryService.getDiaryList(pageNumber, pageSize, sortType);
 
         return new ResponseEntity<>(diaryList, HttpStatus.OK);
     }
