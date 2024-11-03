@@ -6,7 +6,7 @@ import com.moa.domain.member.entity.User;
 
 public interface DiaryLikeService {
 
-    void toggleLikeOnDiary(User user, Diary diary);
+    boolean toggleLikeOnDiary(User user, Diary diary);
 
     DiaryLikeDto.GetDiaryLikesResponse getDiaryLikes(Diary diary);
 

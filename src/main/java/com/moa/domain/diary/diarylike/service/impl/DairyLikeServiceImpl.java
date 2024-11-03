@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -24,9 +25,10 @@ public class DairyLikeServiceImpl implements DiaryLikeService {
     private final DiaryLikeMapper diaryLikeMapper;
 
     @Override
-    public void toggleLikeOnDiary(User user, Diary diary) {
-        diaryLikeRepository.findDiaryLikeByUserAndDiary(user, diary)
-                .ifPresentOrElse(
+    public boolean toggleLikeOnDiary(User user, Diary diary) {
+        Optional<DiaryLike> existingLike = diaryLikeRepository.findDiaryLikeByUserAndDiary(user, diary);
+
+        existingLike.ifPresentOrElse(
                         diaryLikeRepository::delete,
                         () -> diaryLikeRepository.save(
                                 DiaryLike.builder()
@@ -34,6 +36,8 @@ public class DairyLikeServiceImpl implements DiaryLikeService {
                                         .diary(diary)
                                         .build())
                 );
+
+        return existingLike.isEmpty();
     }
 
     @Override

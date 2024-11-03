@@ -29,7 +29,7 @@ public class DiaryMapper {
                 .diaryTitle(diary.getDiaryTitle())
                 .diaryContents(diary.getDiaryContents())
                 .diaryPublishedAt(LocalDate.from(diary.getPublishedAt()))
-                .totalLikes(diary.getDiaryLikeList().size())
+                .totalLikes(diary.getTotalLikes())
                 .build();
     }
 
