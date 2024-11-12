@@ -36,7 +36,8 @@ public class Diary extends TimeStamped {
     @Comment("다이어리 제목")
     private String diaryTitle;
 
-    @Column(name = "diary_contents")
+    @Lob
+    @Column(name = "diary_contents", columnDefinition = "TEXT")
     @Comment("다이어리 내용")
     private String diaryContents;
 
