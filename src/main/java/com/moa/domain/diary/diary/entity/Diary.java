@@ -50,7 +50,7 @@ public class Diary extends TimeStamped {
 
     @Column(name = "view_counts")
     @Comment("다이어리 조회수")
-    private Long viewCounts;
+    private Long viewCounts = 0L;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_uuid")
