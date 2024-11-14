@@ -1,0 +1,51 @@
+package com.moa.domain.diary.diarycomment.entity;
+
+import com.moa.domain.common.TimeStamped;
+import com.moa.domain.diary.diary.entity.Diary;
+import com.moa.domain.member.entity.User;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.UuidGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+@Entity(name = "DIARY_COMMENT")
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class DiaryComment extends TimeStamped {
+
+    @Id
+    @UuidGenerator
+    @Column(name = "comment_id", columnDefinition = "BINARY(16)",  updatable = false, nullable = false)
+    private UUID diaryId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_comment_id")
+    @Comment("부모 댓글 식별 ID")
+    private DiaryComment parentComment;
+
+    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DiaryComment> childrenComments = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "diary_id", nullable = false)
+    @Comment("다이어리 식별 ID")
+    private Diary diary;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @Comment("댓글 작성자 ID")
+    private User user;
+
+    @Column(name = "comment_contents", nullable = false)
+    @Comment("댓글 내용")
+    private String commentContents;
+
+}
