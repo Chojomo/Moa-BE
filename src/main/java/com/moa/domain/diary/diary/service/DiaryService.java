@@ -1,6 +1,7 @@
 package com.moa.domain.diary.diary.service;
 
 import com.moa.domain.diary.diary.dto.DiaryDto;
+import com.moa.domain.diary.diary.entity.Diary;
 import com.moa.domain.diary.diarylike.dto.DiaryLikeDto;
 import com.moa.global.dto.MultiResponseDto;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,5 +28,7 @@ public interface DiaryService {
     DiaryLikeDto.GetDiaryLikesResponse getDiaryLikes(UUID diaryId);
 
     DiaryDto.UploadThumbnailResponse uploadThumbnail(UUID diaryId, MultipartFile multipartFile) throws IOException;
+
+    Diary findDiaryOrThrow(UUID diaryId);
 
 }
