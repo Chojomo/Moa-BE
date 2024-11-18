@@ -189,6 +189,7 @@ public class DiaryServiceImpl implements DiaryService {
                 .build();
     }
 
+    @Override
     public Diary findDiaryOrThrow(UUID diaryId) {
         Optional<Diary> optionalDiary = diaryRepository.findById(diaryId);
         return optionalDiary.orElseThrow();

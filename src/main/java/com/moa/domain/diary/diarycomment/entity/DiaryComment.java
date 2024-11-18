@@ -4,10 +4,7 @@ import com.moa.domain.common.TimeStamped;
 import com.moa.domain.diary.diary.entity.Diary;
 import com.moa.domain.member.entity.User;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -44,8 +41,26 @@ public class DiaryComment extends TimeStamped {
     @Comment("댓글 작성자 ID")
     private User user;
 
-    @Column(name = "comment_contents", nullable = false)
+    @Lob
+    @Column(name = "comment_contents", nullable = false, columnDefinition = "TEXT")
     @Comment("댓글 내용")
     private String commentContents;
+
+    @Builder
+    public DiaryComment(DiaryComment parentComment, List<DiaryComment> childrenComments, Diary diary, User user, String commentContents) {
+        this.parentComment = parentComment;
+        this.childrenComments = childrenComments;
+        this.diary = diary;
+        this.user = user;
+        this.commentContents = commentContents;
+    }
+
+    public static DiaryComment createComment(Diary diary, User user, String commentContents) {
+        return DiaryComment.builder()
+                .diary(diary)
+                .user(user)
+                .commentContents(commentContents)
+                .build();
+    }
 
 }
