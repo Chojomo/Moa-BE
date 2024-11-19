@@ -63,4 +63,13 @@ public class DiaryComment extends TimeStamped {
                 .build();
     }
 
+    public static DiaryComment createReply(Diary diary, DiaryComment diaryComment, User user, String commentContents) {
+        return DiaryComment.builder()
+                .diary(diary)
+                .parentComment(diaryComment)
+                .user(user)
+                .commentContents(commentContents)
+                .build();
+    }
+
 }

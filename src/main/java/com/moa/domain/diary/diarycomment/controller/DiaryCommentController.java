@@ -24,5 +24,12 @@ public class DiaryCommentController {
         return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.CREATED.value()), HttpStatus.CREATED);
     }
 
+    @PostMapping("/{diaryId}/comments/{commentId}/replies")
+    public ResponseEntity<SingleResponseDto<Integer>> createReply(
+            @PathVariable UUID diaryId, @PathVariable UUID commentId, @RequestBody DiaryCommentDto.CreateReplyRequest request) {
+        diaryCommentService.createReply(diaryId, commentId, request);
+        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.CREATED.value()), HttpStatus.CREATED);
+    }
+
 }
 

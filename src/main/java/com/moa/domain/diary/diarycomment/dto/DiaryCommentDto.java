@@ -9,4 +9,9 @@ public class DiaryCommentDto {
         private String commentContents;
     }
 
+    @Data
+    public static class CreateReplyRequest {
+        private String replyContents;
+    }
+
 }
