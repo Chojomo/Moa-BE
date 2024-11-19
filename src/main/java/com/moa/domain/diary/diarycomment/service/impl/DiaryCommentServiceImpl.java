@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -34,6 +35,24 @@ public class DiaryCommentServiceImpl implements DiaryCommentService {
         DiaryComment comment = DiaryComment.createComment(diary, loginUser, request.getCommentContents());
 
         diaryCommentRepository.save(comment);
+    }
+
+    @Override
+    public void createReply(UUID diaryId, UUID commentId, DiaryCommentDto.CreateReplyRequest request) {
+        User loginUser = authService.getLoginUser();
+
+        Diary diary = diaryService.findDiaryOrThrow(diaryId);
+
+        DiaryComment comment = findCommentOrThrow(commentId);
+
+        DiaryComment reply = DiaryComment.createReply(diary, comment, loginUser, request.getReplyContents());
+
+        diaryCommentRepository.save(reply);
+    }
+
+    public DiaryComment findCommentOrThrow(UUID commentId) {
+        Optional<DiaryComment> optionalDiaryComment = diaryCommentRepository.findById(commentId);
+        return optionalDiaryComment.orElseThrow();
     }
 
 }
