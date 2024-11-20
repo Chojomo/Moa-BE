@@ -73,6 +73,7 @@ public class DiaryDto {
         private String diaryContents;
         private LocalDate diaryPublishedAt;
         private Long totalLikes;
+        private Long diaryCommentCount;
     }
 
 }

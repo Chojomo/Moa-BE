@@ -19,7 +19,7 @@ public class DiaryLike extends CreatedAt {
     @Id
     @UuidGenerator
     @Column(name = "like_id")
-    @Comment("좋아요 식별 ID")
+    @Comment("좋아요 식별 UUID")
     private UUID likeId;
 
     @ManyToOne(fetch = FetchType.LAZY)

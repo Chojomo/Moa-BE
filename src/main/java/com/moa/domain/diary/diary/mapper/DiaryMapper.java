@@ -30,6 +30,7 @@ public class DiaryMapper {
                 .diaryContents(diary.getDiaryContents())
                 .diaryPublishedAt(LocalDate.from(diary.getPublishedAt()))
                 .totalLikes(diary.getTotalLikes())
+                .diaryCommentCount((long) diary.getDiaryCommentList().size())
                 .build();
     }
 

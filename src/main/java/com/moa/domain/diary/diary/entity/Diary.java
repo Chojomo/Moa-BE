@@ -1,11 +1,13 @@
 package com.moa.domain.diary.diary.entity;
 
 import com.moa.domain.common.TimeStamped;
+import com.moa.domain.diary.diarycomment.entity.DiaryComment;
 import com.moa.domain.diary.diaryimage.entity.DiaryImage;
 import com.moa.domain.diary.diarylike.entity.DiaryLike;
 import com.moa.domain.member.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -67,12 +69,17 @@ public class Diary extends TimeStamped {
     private LocalDateTime publishedAt;
 
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Comment("다이어리 이미지 식별 ID")
+    @Comment("다이어리 이미지 UUID")
     private List<DiaryImage> diaryImageList = new ArrayList<>();
 
     @OneToMany(mappedBy = "diary")
-    @Comment("다이어리 좋아요 식별 ID")
+    @Comment("다이어리 좋아요 UUID")
     private List<DiaryLike> diaryLikeList = new ArrayList<>();
+
+    @BatchSize(size = 100)
+    @OneToMany(mappedBy = "diary")
+    @Comment("다이어리 댓글 UUID")
+    private List<DiaryComment> diaryCommentList = new ArrayList<>();
 
     @Builder
     public Diary(String diaryThumbnail, String diaryTitle, String diaryContents, Boolean isDairyPublic, Byte diaryStatus, User user) {
