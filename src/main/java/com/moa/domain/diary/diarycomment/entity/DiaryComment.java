@@ -21,7 +21,8 @@ public class DiaryComment extends TimeStamped {
     @Id
     @UuidGenerator
     @Column(name = "comment_id", columnDefinition = "BINARY(16)",  updatable = false, nullable = false)
-    private UUID diaryId;
+    @Comment("다이어리 댓글 UUID")
+    private UUID diaryCommentId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_comment_id")
