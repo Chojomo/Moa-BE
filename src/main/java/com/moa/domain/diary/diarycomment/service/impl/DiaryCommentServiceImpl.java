@@ -32,6 +32,8 @@ public class DiaryCommentServiceImpl implements DiaryCommentService {
 
         Diary diary = diaryService.findDiaryOrThrow(diaryId);
 
+        diary.incrementCommentCount();
+
         DiaryComment comment = DiaryComment.createComment(diary, loginUser, request.getCommentContents());
 
         diaryCommentRepository.save(comment);
@@ -42,6 +44,8 @@ public class DiaryCommentServiceImpl implements DiaryCommentService {
         User loginUser = authService.getLoginUser();
 
         Diary diary = diaryService.findDiaryOrThrow(diaryId);
+
+        diary.incrementCommentCount();
 
         DiaryComment comment = findCommentOrThrow(commentId);
 

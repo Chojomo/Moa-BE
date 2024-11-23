@@ -51,18 +51,22 @@ public class Diary extends TimeStamped {
     @Comment("다이어리 상태 0: 초기화, 1: 임시저장, 2: 저장 완료")
     private Byte diaryStatus;
 
-    @Column(name = "view_counts")
-    @Comment("다이어리 조회수")
-    private Long viewCounts = 0L;
+    @Column(name = "view_count")
+    @Comment("조회 수")
+    private Long viewCount = 0L;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_uuid")
     @Comment("유저 UUID")
     private User user;
 
-    @Column(name = "total_likes")
-    @Comment("총 좋아요 수")
-    private Long totalLikes = 0L;
+    @Column(name = "like_count")
+    @Comment("좋아요 수")
+    private Long likeCount = 0L;
+
+    @Column(name = "comment_count")
+    @Comment("댓글 수")
+    private Long commentCount = 0L;
 
     @Column(name = "published_at")
     @Comment("게시 날짜")
@@ -118,18 +122,22 @@ public class Diary extends TimeStamped {
         this.diaryThumbnail = diaryThumbnail;
     }
 
-    public void incrementTotalLikes() {
-        this.totalLikes++;
+    public void incrementLikeCount() {
+        this.likeCount++;
     }
 
-    public void decrementTotalLikes() {
-        if (this.totalLikes > 0) {
-            this.totalLikes--;
+    public void decrementLikeCount() {
+        if (this.likeCount > 0) {
+            this.likeCount--;
         }
     }
 
-    public void incrementViewCounts() {
-        this.viewCounts++;
+    public void incrementViewCount() {
+        this.viewCount++;
+    }
+
+    public void incrementCommentCount() {
+        this.commentCount++;
     }
 
 }

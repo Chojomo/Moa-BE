@@ -108,7 +108,7 @@ public class DiaryServiceImpl implements DiaryService {
             throw new RuntimeException();
         }
 
-        diary.incrementViewCounts();
+        diary.incrementViewCount();
 
         diaryRepository.save(diary);
 
@@ -151,9 +151,9 @@ public class DiaryServiceImpl implements DiaryService {
         boolean isLiked = diaryLikeService.toggleLikeOnDiary(loginUser, diary);
 
         if (isLiked) {
-            diary.incrementTotalLikes();
+            diary.incrementLikeCount();
         } else {
-            diary.decrementTotalLikes();
+            diary.decrementLikeCount();
         }
 
         diaryRepository.save(diary);
