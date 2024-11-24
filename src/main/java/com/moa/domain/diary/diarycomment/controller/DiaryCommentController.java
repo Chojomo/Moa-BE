@@ -31,5 +31,11 @@ public class DiaryCommentController {
         return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.CREATED.value()), HttpStatus.CREATED);
     }
 
+    @PostMapping("/comments/{commentId}/like")
+    public ResponseEntity<SingleResponseDto> toggleLikeOnComment(@PathVariable UUID commentId) {
+        diaryCommentService.toggleLikeOnDiary(commentId);
+        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value()), HttpStatus.OK);
+    }
+
 }
 

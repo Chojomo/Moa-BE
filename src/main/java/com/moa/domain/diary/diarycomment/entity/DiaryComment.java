@@ -47,6 +47,10 @@ public class DiaryComment extends TimeStamped {
     @Comment("댓글 내용")
     private String commentContents;
 
+    @Column(name = "like_count")
+    @Comment("좋아요 수")
+    private Long likeCount = 0L;
+
     @Builder
     public DiaryComment(DiaryComment parentComment, List<DiaryComment> childrenComments, Diary diary, User user, String commentContents) {
         this.parentComment = parentComment;
@@ -71,6 +75,16 @@ public class DiaryComment extends TimeStamped {
                 .user(user)
                 .commentContents(commentContents)
                 .build();
+    }
+
+    public void incrementLikeCount() {
+        this.likeCount++;
+    }
+
+    public void decrementLikeCount() {
+        if (this.likeCount > 0) {
+            this.likeCount--;
+        }
     }
 
 }
