@@ -10,4 +10,6 @@ public interface DiaryCommentService {
 
     void createReply(UUID diaryId, UUID commentId, DiaryCommentDto.CreateReplyRequest request);
 
+    void toggleLikeOnDiary(UUID commentId);
+
 }

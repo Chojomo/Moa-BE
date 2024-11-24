@@ -6,6 +6,7 @@ import com.moa.domain.diary.diarycomment.dto.DiaryCommentDto;
 import com.moa.domain.diary.diarycomment.entity.DiaryComment;
 import com.moa.domain.diary.diarycomment.repository.DiaryCommentRepository;
 import com.moa.domain.diary.diarycomment.service.DiaryCommentService;
+import com.moa.domain.diary.diarycommentlike.service.DiaryCommentLikeService;
 import com.moa.domain.member.entity.User;
 import com.moa.global.security.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class DiaryCommentServiceImpl implements DiaryCommentService {
     private final AuthService authService;
     private final DiaryService diaryService;
     private final DiaryCommentRepository diaryCommentRepository;
+    private final DiaryCommentLikeService diaryCommentLikeService;
 
     @Override
     public void createComment(UUID diaryId, DiaryCommentDto.CreateCommentRequest request) {
@@ -52,6 +54,23 @@ public class DiaryCommentServiceImpl implements DiaryCommentService {
         DiaryComment reply = DiaryComment.createReply(diary, comment, loginUser, request.getReplyContents());
 
         diaryCommentRepository.save(reply);
+    }
+
+    @Override
+    public void toggleLikeOnDiary(UUID commentId) {
+        User loginUser = authService.getLoginUser();
+
+        DiaryComment comment = findCommentOrThrow(commentId);
+
+        boolean isLiked = diaryCommentLikeService.toggleLikeOnComment(loginUser, comment);
+
+        if (isLiked) {
+            comment.incrementLikeCount();
+        } else {
+            comment.decrementLikeCount();
+        }
+
+        diaryCommentRepository.save(comment);
     }
 
     public DiaryComment findCommentOrThrow(UUID commentId) {
