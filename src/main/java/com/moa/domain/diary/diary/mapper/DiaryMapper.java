@@ -13,7 +13,7 @@ public class DiaryMapper {
         return DiaryDto.GetDiaryResponse.builder()
                 .diaryId(diary.getDiaryId())
                 .diaryStatus(diary.getDiaryStatus())
-                .diaryTitle(diary.getDiaryContents())
+                .diaryTitle(diary.getDiaryTitle())
                 .diaryContents(diary.getDiaryContents())
                 .diaryThumbnail(diary.getDiaryThumbnail())
                 .isDiaryPublic(diary.getIsDairyPublic())
