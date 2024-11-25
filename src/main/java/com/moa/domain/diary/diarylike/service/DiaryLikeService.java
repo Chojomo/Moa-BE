@@ -10,4 +10,6 @@ public interface DiaryLikeService {
 
     DiaryLikeDto.GetDiaryLikesResponse getDiaryLikes(Diary diary);
 
+    Boolean isDiaryLiked(Diary diary, User user);
+
 }
