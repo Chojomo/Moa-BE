@@ -47,4 +47,9 @@ public class DairyLikeServiceImpl implements DiaryLikeService {
         return diaryLikeMapper.toGetDiaryLikesResponse(diaryLikes);
     }
 
+    @Override
+    public Boolean isDiaryLiked(Diary diary, User user) {
+        return diaryLikeRepository.findDiaryLikeByUserAndDiary(user, diary).isPresent();
+    }
+
 }

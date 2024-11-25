@@ -47,12 +47,25 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public User getLoginUser() {
+        if (getPrincipalDetails() == null) {
+             return null;
+        }
         return getPrincipalDetails().getUser();
     }
 
     private PrincipalDetailsService.PrincipalDetails getPrincipalDetails() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (PrincipalDetailsService.PrincipalDetails) authentication.getPrincipal();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return null;
+        }
+
+        Object principal = authentication.getPrincipal();
+
+        if (principal instanceof PrincipalDetailsService.PrincipalDetails) {
+            return (PrincipalDetailsService.PrincipalDetails) principal;
+        } else {
+            return null;
+        }
     }
 
 }

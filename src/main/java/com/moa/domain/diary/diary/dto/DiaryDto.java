@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,11 +34,17 @@ public class DiaryDto {
     @Builder
     public static class GetDiaryResponse {
         private UUID diaryId;
-        private Byte diaryStatus;
+        private UUID diaryAuthorId;
+        private String diaryAuthorNickname;
+        private String diaryAuthorProfileImage;
         private String diaryTitle;
         private String diaryContents;
         private String diaryThumbnail;
         private Boolean isDiaryPublic;
+        private Boolean isLiked;
+        private LocalDateTime diaryPublishedAt;
+        private Long viewCount;
+        private Long likeCount;
     }
 
     @Data

@@ -102,7 +102,7 @@ public class DiaryServiceImpl implements DiaryService {
     public DiaryDto.GetDiaryResponse getDiaryDetails(UUID diaryId) {
         User loginUser = authService.getLoginUser();
 
-        Diary diary = findDiaryOrThrow(diaryId);
+        Diary diary = findDiaryWithUserOrThrow(diaryId);
 
         if (!diary.getIsDairyPublic() && !loginUser.getUserId().equals(diary.getUser().getUserId())) {
             throw new RuntimeException();
@@ -112,7 +112,13 @@ public class DiaryServiceImpl implements DiaryService {
 
         diaryRepository.save(diary);
 
-        return diaryMapper.diaryToGetDiaryResponse(diary);
+        Boolean diaryLiked = false;
+
+        if (loginUser != null) {
+            diaryLiked = diaryLikeService.isDiaryLiked(diary, loginUser);
+        }
+
+        return diaryMapper.diaryToGetDiaryResponse(diary, diaryLiked);
     }
 
     @Override
@@ -192,6 +198,11 @@ public class DiaryServiceImpl implements DiaryService {
     @Override
     public Diary findDiaryOrThrow(UUID diaryId) {
         Optional<Diary> optionalDiary = diaryRepository.findById(diaryId);
+        return optionalDiary.orElseThrow();
+    }
+
+    public Diary findDiaryWithUserOrThrow(UUID diaryId) {
+        Optional<Diary> optionalDiary = diaryRepository.findDiaryWithUserById(diaryId);
         return optionalDiary.orElseThrow();
     }
 

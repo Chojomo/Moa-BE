@@ -9,14 +9,20 @@ import java.time.LocalDate;
 @Component
 public class DiaryMapper {
 
-    public DiaryDto.GetDiaryResponse diaryToGetDiaryResponse(Diary diary) {
+    public DiaryDto.GetDiaryResponse diaryToGetDiaryResponse(Diary diary, Boolean isLiked) {
         return DiaryDto.GetDiaryResponse.builder()
                 .diaryId(diary.getDiaryId())
-                .diaryStatus(diary.getDiaryStatus())
+                .diaryAuthorId(diary.getUser().getUserId())
+                .diaryAuthorNickname(diary.getUser().getUserNickname())
+                .diaryAuthorProfileImage(diary.getUser().getUserProfileImage())
                 .diaryTitle(diary.getDiaryTitle())
                 .diaryContents(diary.getDiaryContents())
                 .diaryThumbnail(diary.getDiaryThumbnail())
                 .isDiaryPublic(diary.getIsDairyPublic())
+                .isLiked(isLiked)
+                .diaryPublishedAt(diary.getPublishedAt())
+                .viewCount(diary.getViewCount())
+                .likeCount(diary.getLikeCount())
                 .build();
     }
 
