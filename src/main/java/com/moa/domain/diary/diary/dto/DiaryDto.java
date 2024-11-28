@@ -45,6 +45,37 @@ public class DiaryDto {
         private LocalDateTime diaryPublishedAt;
         private Long viewCount;
         private Long likeCount;
+        private Long commentCount;
+        private Comments comment;
+    }
+
+    @Data
+    @Builder
+    public static class Comments {
+        private List<CommentData> comments;
+    }
+
+    @Data
+    @Builder
+    public static class CommentData {
+        private UUID commentAuthorId;
+        private String diaryAuthorNickname;
+        private String diaryAuthorProfileImage;
+        private LocalDateTime createdAt;
+        private Long likeCount;
+        private String commentContents;
+        private List<ReplyData> replies;
+    }
+
+    @Data
+    @Builder
+    public static class ReplyData {
+        private UUID replyAuthorId;
+        private String replyAuthorNickname;
+        private String replyAuthorProfileImage;
+        private LocalDateTime createdAt;
+        private Long likeCount;
+        private String replyContents;
     }
 
     @Data
