@@ -3,6 +3,9 @@ package com.moa.domain.diary.diary.service.impl;
 import com.moa.domain.diary.diary.dto.DiaryDto;
 import com.moa.domain.diary.diary.entity.Diary;
 import com.moa.domain.diary.diary.service.DiaryService;
+import com.moa.domain.diary.diarycomment.entity.DiaryComment;
+import com.moa.domain.diary.diarycomment.repository.DiaryCommentRepository;
+import com.moa.domain.diary.diarycomment.service.DiaryCommentService;
 import com.moa.domain.diary.diaryimage.entity.DiaryImage;
 import com.moa.domain.diary.diary.mapper.DiaryMapper;
 import com.moa.domain.diary.diaryimage.repository.DiaryImageRepository;
@@ -25,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -41,6 +45,7 @@ public class DiaryServiceImpl implements DiaryService {
     private final ObjectStorageService objectStorageService;
     private final DiaryMapper diaryMapper;
     private final DiaryLikeService diaryLikeService;
+    private final DiaryCommentRepository diaryCommentRepository;
 
     @Override
     public DiaryDto.InitializeDiaryResponse initializeDiary() {
@@ -118,7 +123,9 @@ public class DiaryServiceImpl implements DiaryService {
             diaryLiked = diaryLikeService.isDiaryLiked(diary, loginUser);
         }
 
-        return diaryMapper.diaryToGetDiaryResponse(diary, diaryLiked);
+        List<DiaryComment> commentsAndReplies = diaryCommentRepository.findCommentsByDiaryId(diaryId);
+
+        return diaryMapper.diaryToGetDiaryResponse(diary, commentsAndReplies, diaryLiked);
     }
 
     @Override
