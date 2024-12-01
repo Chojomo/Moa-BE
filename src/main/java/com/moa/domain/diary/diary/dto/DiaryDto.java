@@ -34,6 +34,7 @@ public class DiaryDto {
     @Builder
     public static class GetDiaryResponse {
         private UUID diaryId;
+        private Boolean isDiaryOwner;
         private UUID diaryAuthorId;
         private String diaryAuthorNickname;
         private String diaryAuthorProfileImage;
@@ -58,10 +59,13 @@ public class DiaryDto {
     @Data
     @Builder
     public static class CommentData {
+        private UUID commentId;
+        private Boolean isCommentOwner;
         private UUID commentAuthorId;
         private String diaryAuthorNickname;
         private String diaryAuthorProfileImage;
         private LocalDateTime createdAt;
+        private Boolean isLiked;
         private Long likeCount;
         private String commentContents;
         private List<ReplyData> replies;
@@ -70,10 +74,13 @@ public class DiaryDto {
     @Data
     @Builder
     public static class ReplyData {
+        private UUID replyId;
+        private Boolean isReplyOwner;
         private UUID replyAuthorId;
         private String replyAuthorNickname;
         private String replyAuthorProfileImage;
         private LocalDateTime createdAt;
+        private Boolean isLiked;
         private Long likeCount;
         private String replyContents;
     }
