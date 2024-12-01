@@ -5,7 +5,7 @@ import com.moa.domain.diary.diary.entity.Diary;
 import com.moa.domain.diary.diary.service.DiaryService;
 import com.moa.domain.diary.diarycomment.entity.DiaryComment;
 import com.moa.domain.diary.diarycomment.repository.DiaryCommentRepository;
-import com.moa.domain.diary.diarycomment.service.DiaryCommentService;
+import com.moa.domain.diary.diarycommentlike.repository.DiaryCommentLikeRepository;
 import com.moa.domain.diary.diaryimage.entity.DiaryImage;
 import com.moa.domain.diary.diary.mapper.DiaryMapper;
 import com.moa.domain.diary.diaryimage.repository.DiaryImageRepository;
@@ -29,9 +29,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -46,6 +48,7 @@ public class DiaryServiceImpl implements DiaryService {
     private final DiaryMapper diaryMapper;
     private final DiaryLikeService diaryLikeService;
     private final DiaryCommentRepository diaryCommentRepository;
+    private final DiaryCommentLikeRepository diaryCommentLikeRepository;
 
     @Override
     public DiaryDto.InitializeDiaryResponse initializeDiary() {
@@ -125,7 +128,9 @@ public class DiaryServiceImpl implements DiaryService {
 
         List<DiaryComment> commentsAndReplies = diaryCommentRepository.findCommentsByDiaryId(diaryId);
 
-        return diaryMapper.diaryToGetDiaryResponse(diary, commentsAndReplies, diaryLiked);
+        Map<UUID, Boolean> loginUserCommentLikeData = getLoginUserCommentLikeData(loginUser, commentsAndReplies);
+
+        return diaryMapper.diaryToGetDiaryResponse(loginUser, diary, commentsAndReplies, diaryLiked, loginUserCommentLikeData);
     }
 
     @Override
@@ -217,6 +222,32 @@ public class DiaryServiceImpl implements DiaryService {
         if (!diary.getUser().getUserId().equals(user.getUserId())) {
             log.info("다이어리 수정 권한이 없습니다.");
         }
+    }
+
+    private Map<UUID, Boolean> getLoginUserCommentLikeData(User loginUser, List<DiaryComment> commentsAndReplies) {
+        if (loginUser == null) {
+            return Map.of();
+        }
+
+        List<UUID> commentIds = extractAllCommentIdsWithStream(commentsAndReplies);
+
+        List<UUID> diaryCommentLikesByUser = diaryCommentLikeRepository.findDiaryCommentLikesByUser(loginUser, commentIds);
+
+        return diaryCommentLikesByUser.stream()
+                .collect(Collectors.toMap(id -> id, id -> true));
+    }
+
+    public List<UUID> extractAllCommentIdsWithStream(List<DiaryComment> comments) {
+        if (comments == null || comments.isEmpty()) {
+            return List.of();
+        }
+
+        return comments.stream()
+                .flatMap(comment -> Stream.concat(
+                        Stream.of(comment.getDiaryCommentId()),
+                        extractAllCommentIdsWithStream(comment.getChildrenComments()).stream()
+                ))
+                .toList();
     }
 
 }
