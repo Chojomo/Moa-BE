@@ -29,6 +29,7 @@ public class DiaryMapper {
                 .diaryPublishedAt(diary.getPublishedAt())
                 .viewCount(diary.getViewCount())
                 .likeCount(diary.getLikeCount())
+                .commentCount(diary.getCommentCount())
                 .comment(DiaryDto.Comments.builder()
                         .comments(commentDataList)
                         .build())
