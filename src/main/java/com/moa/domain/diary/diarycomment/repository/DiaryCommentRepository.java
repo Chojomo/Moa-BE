@@ -15,7 +15,8 @@ public interface DiaryCommentRepository extends JpaRepository<DiaryComment, UUID
             "LEFT JOIN FETCH d.childrenComments c " +
             "LEFT JOIN FETCH d.user u " +
             "WHERE d.diary.diaryId = :diaryId " +
-            "AND d.parentComment IS NULL")
+            "AND d.parentComment IS NULL " +
+            "ORDER BY d.createdAt")
     List<DiaryComment> findCommentsByDiaryId(UUID diaryId);
 
 }
