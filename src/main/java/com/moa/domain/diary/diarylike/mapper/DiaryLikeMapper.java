@@ -5,7 +5,6 @@ import com.moa.domain.diary.diarylike.entity.DiaryLike;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class DiaryLikeMapper {
@@ -14,7 +13,8 @@ public class DiaryLikeMapper {
         List<DiaryLikeDto.DiaryLikedUserDto> likedUsers = diaryLikes.stream()
                 .map(diaryLike -> DiaryLikeDto.DiaryLikedUserDto.builder()
                         .userId(diaryLike.getUser().getUserId().toString())
-                        .username(diaryLike.getUser().getUsername())
+                        .userNickname(diaryLike.getUser().getUserNickname())
+                        .userProfileImage(diaryLike.getUser().getUserProfileImage())
                         .build())
                 .toList();
 
