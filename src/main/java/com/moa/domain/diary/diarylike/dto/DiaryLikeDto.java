@@ -18,7 +18,8 @@ public class DiaryLikeDto {
     @Builder
     public static class DiaryLikedUserDto {
         private String userId;
-        private String username;
+        private String userNickname;
+        private String userProfileImage;
     }
 
 }
