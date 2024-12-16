@@ -68,6 +68,19 @@ spring:
         highlight_sql: true
         format_sql: true
         use_sql_comments: true
+        mail:
+          host: smtp.gmail.com
+          port: 587
+          username: ${MOA_EMAIL}
+          password: ${MOA_EMAIL_PASSWORD}
+          properties:
+            mail:
+              smtp:
+                auth: true
+                timeout: 5000
+                starttls:
+                  enable: true
+
 cloud:
   aws:
     s3:

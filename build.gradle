@@ -32,6 +32,7 @@ dependencies {
 	implementation 'com.google.code.gson:gson'
 	implementation 'software.amazon.awssdk:s3:2.20.55'
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
 	compileOnly 'org.projectlombok:lombok'
 
