@@ -21,4 +21,11 @@ public class UserDto {
         private Boolean isMyPage;
     }
 
+    @Data
+    public static class ChangePasswordRequest {
+        private String currentPassword;
+        private String newPassword;
+        private String confirmNewPassword;
+    }
+
 }

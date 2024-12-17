@@ -11,4 +11,6 @@ public interface AuthService {
 
     User getLoginUser();
 
+    void changePassword(UserDto.ChangePasswordRequest req);
+
 }

@@ -2,6 +2,8 @@ package com.moa.global.security.service.impl;
 
 import com.moa.domain.member.dto.UserDto;
 import com.moa.domain.member.entity.User;
+import com.moa.domain.member.exception.UserException;
+import com.moa.domain.member.exception.UserExceptionCode;
 import com.moa.domain.member.mapper.UserMapper;
 import com.moa.domain.member.repository.UserRepository;
 import com.moa.global.security.principaldetails.PrincipalDetailsService;
@@ -51,6 +53,27 @@ public class AuthServiceImpl implements AuthService {
              return null;
         }
         return getPrincipalDetails().getUser();
+    }
+
+    @Override
+    public void changePassword(UserDto.ChangePasswordRequest req) {
+        User loginUser = getLoginUser();
+
+        String storedPassword = loginUser.getUserPassword();
+
+        if (!passwordEncoder.matches(req.getCurrentPassword(), storedPassword)) {
+            throw new UserException(UserExceptionCode.PASSWORD_NOT_MATCH);
+        }
+
+        if (!req.getNewPassword().equals(req.getConfirmNewPassword())) {
+            throw new UserException(UserExceptionCode.PASSWORD_MISMATCH);
+        }
+
+        String encodedInputPassword = passwordEncoder.encode(req.getNewPassword());
+
+        loginUser.setUserPassword(encodedInputPassword);
+
+        userRepository.save(loginUser);
     }
 
     private PrincipalDetailsService.PrincipalDetails getPrincipalDetails() {
