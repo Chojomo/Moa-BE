@@ -25,4 +25,11 @@ public class AuthController {
         return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.CREATED.value()), HttpStatus.CREATED);
     }
 
+    @PostMapping("/change/password")
+    public ResponseEntity<SingleResponseDto<Integer>> changePassword(@RequestBody UserDto.ChangePasswordRequest req) {
+        authService.changePassword(req);
+
+        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value()), HttpStatus.OK);
+    }
+
 }
