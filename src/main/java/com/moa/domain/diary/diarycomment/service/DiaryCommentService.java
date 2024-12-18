@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public interface DiaryCommentService {
 
-    void createComment(UUID diaryId, DiaryCommentDto.CreateCommentRequest request);
+    DiaryCommentDto.CreateCommentResponse createComment(UUID diaryId, DiaryCommentDto.CreateCommentRequest request);
 
     void createReply(UUID diaryId, UUID commentId, DiaryCommentDto.CreateReplyRequest request);
 

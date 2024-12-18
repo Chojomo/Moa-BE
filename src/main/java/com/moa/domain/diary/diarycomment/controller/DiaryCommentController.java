@@ -18,10 +18,10 @@ public class DiaryCommentController {
     private final DiaryCommentService diaryCommentService;
 
     @PostMapping("/{diaryId}/comments")
-    public ResponseEntity<SingleResponseDto<Integer>> createComment(
+    public ResponseEntity<SingleResponseDto<DiaryCommentDto.CreateCommentResponse>> createComment(
             @PathVariable UUID diaryId, @RequestBody DiaryCommentDto.CreateCommentRequest request) {
-        diaryCommentService.createComment(diaryId, request);
-        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.CREATED.value()), HttpStatus.CREATED);
+        DiaryCommentDto.CreateCommentResponse response = diaryCommentService.createComment(diaryId, request);
+        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.CREATED.value(), response), HttpStatus.CREATED);
     }
 
     @PostMapping("/{diaryId}/comments/{commentId}/replies")
