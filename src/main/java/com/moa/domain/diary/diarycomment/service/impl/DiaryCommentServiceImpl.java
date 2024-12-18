@@ -4,6 +4,7 @@ import com.moa.domain.diary.diary.entity.Diary;
 import com.moa.domain.diary.diary.service.DiaryService;
 import com.moa.domain.diary.diarycomment.dto.DiaryCommentDto;
 import com.moa.domain.diary.diarycomment.entity.DiaryComment;
+import com.moa.domain.diary.diarycomment.mapper.DiaryCommentMapper;
 import com.moa.domain.diary.diarycomment.repository.DiaryCommentRepository;
 import com.moa.domain.diary.diarycomment.service.DiaryCommentService;
 import com.moa.domain.diary.diarycommentlike.service.DiaryCommentLikeService;
@@ -27,9 +28,10 @@ public class DiaryCommentServiceImpl implements DiaryCommentService {
     private final DiaryService diaryService;
     private final DiaryCommentRepository diaryCommentRepository;
     private final DiaryCommentLikeService diaryCommentLikeService;
+    private final DiaryCommentMapper diaryCommentMapper;
 
     @Override
-    public void createComment(UUID diaryId, DiaryCommentDto.CreateCommentRequest request) {
+    public DiaryCommentDto.CreateCommentResponse createComment(UUID diaryId, DiaryCommentDto.CreateCommentRequest request) {
         User loginUser = authService.getLoginUser();
 
         Diary diary = diaryService.findDiaryOrThrow(diaryId);
@@ -38,7 +40,9 @@ public class DiaryCommentServiceImpl implements DiaryCommentService {
 
         DiaryComment comment = DiaryComment.createComment(diary, loginUser, request.getCommentContents());
 
-        diaryCommentRepository.save(comment);
+        DiaryComment savedComment = diaryCommentRepository.save(comment);
+
+        return diaryCommentMapper.commentToCreateCommentResponse(savedComment);
     }
 
     @Override
