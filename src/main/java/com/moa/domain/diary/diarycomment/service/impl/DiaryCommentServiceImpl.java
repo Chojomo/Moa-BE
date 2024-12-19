@@ -46,7 +46,7 @@ public class DiaryCommentServiceImpl implements DiaryCommentService {
     }
 
     @Override
-    public void createReply(UUID diaryId, UUID commentId, DiaryCommentDto.CreateReplyRequest request) {
+    public DiaryCommentDto.CreateReplyResponse createReply(UUID diaryId, UUID commentId, DiaryCommentDto.CreateReplyRequest request) {
         User loginUser = authService.getLoginUser();
 
         Diary diary = diaryService.findDiaryOrThrow(diaryId);
@@ -57,7 +57,9 @@ public class DiaryCommentServiceImpl implements DiaryCommentService {
 
         DiaryComment reply = DiaryComment.createReply(diary, comment, loginUser, request.getReplyContents());
 
-        diaryCommentRepository.save(reply);
+        DiaryComment savedReply = diaryCommentRepository.save(reply);
+
+        return diaryCommentMapper.commentToCreateReplyResponse(savedReply);
     }
 
     @Override
