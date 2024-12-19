@@ -19,4 +19,16 @@ public class DiaryCommentMapper {
                 .build();
     }
 
+    public DiaryCommentDto.CreateReplyResponse commentToCreateReplyResponse(DiaryComment reply) {
+        return DiaryCommentDto.CreateReplyResponse.builder()
+                .replyId(reply.getDiaryCommentId())
+                .isReplyOwner(true)
+                .replyAuthorId(reply.getUser().getUserId())
+                .replyAuthorNickname(reply.getUser().getUserNickname())
+                .replyAuthorProfileImage(reply.getUser().getUserProfileImage())
+                .createdAt(reply.getCreatedAt())
+                .replyContents(reply.getCommentContents())
+                .build();
+    }
+
 }
