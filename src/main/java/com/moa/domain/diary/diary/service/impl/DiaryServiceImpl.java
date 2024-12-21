@@ -208,8 +208,19 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
+    public void deleteDiary(UUID diaryId) {
+        User loginUser = authService.getLoginUser();
+
+        Diary diary = findDiaryOrThrow(diaryId);
+
+        checkDiaryOwnership(diary, loginUser);
+
+        diary.deleteDiary();
+    }
+
+    @Override
     public Diary findDiaryOrThrow(UUID diaryId) {
-        Optional<Diary> optionalDiary = diaryRepository.findById(diaryId);
+        Optional<Diary> optionalDiary = diaryRepository.findNotDeletedDiaryById(diaryId);
         return optionalDiary.orElseThrow();
     }
 

@@ -31,4 +31,6 @@ public interface DiaryService {
 
     Diary findDiaryOrThrow(UUID diaryId);
 
+    void deleteDiary(UUID diaryId);
+
 }
