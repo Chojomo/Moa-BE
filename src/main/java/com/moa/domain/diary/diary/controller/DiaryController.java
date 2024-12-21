@@ -76,4 +76,10 @@ public class DiaryController {
         return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value(), diaryService.uploadThumbnail(diaryId, multipartFile)), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{diaryId}")
+    public ResponseEntity<SingleResponseDto<Integer>> deleteDiary(@PathVariable UUID diaryId) {
+        diaryService.deleteDiary(diaryId);
+        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value()), HttpStatus.OK);
+    }
+
 }

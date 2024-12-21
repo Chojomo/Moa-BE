@@ -48,7 +48,7 @@ public class Diary extends TimeStamped {
     private Boolean isDairyPublic;
 
     @Column(name = "diary_status")
-    @Comment("다이어리 상태 0: 초기화, 1: 임시저장, 2: 저장 완료")
+    @Comment("다이어리 상태 0: 초기화, 1: 임시저장, 2: 저장 완료, 3: 삭제")
     private Byte diaryStatus;
 
     @Column(name = "view_count")
@@ -71,6 +71,10 @@ public class Diary extends TimeStamped {
     @Column(name = "published_at")
     @Comment("게시 날짜")
     private LocalDateTime publishedAt;
+
+    @Column(name = "deleted_at")
+    @Comment("삭제 날짜")
+    private LocalDateTime deletedAt;
 
     @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL, orphanRemoval = true)
     @Comment("다이어리 이미지 UUID")
@@ -138,6 +142,11 @@ public class Diary extends TimeStamped {
 
     public void incrementCommentCount() {
         this.commentCount++;
+    }
+
+    public void deleteDiary() {
+        this.diaryStatus = 3;
+        this.deletedAt = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
     }
 
 }

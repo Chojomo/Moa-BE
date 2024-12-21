@@ -22,4 +22,7 @@ public interface DiaryRepository extends JpaRepository<Diary, UUID> {
     @Query("SELECT d FROM DIARY d JOIN FETCH d.user WHERE d.diaryId = :diaryId")
     Optional<Diary> findDiaryWithUserById(UUID diaryId);
 
+    @Query("SELECT d FROM DIARY d WHERE d.diaryStatus != 3 AND d.diaryId = :diaryId")
+    Optional<Diary> findNotDeletedDiaryById(UUID diaryId);
+
 }
