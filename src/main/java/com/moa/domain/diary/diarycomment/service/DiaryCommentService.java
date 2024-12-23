@@ -12,4 +12,6 @@ public interface DiaryCommentService {
 
     void toggleLikeOnDiary(UUID commentId);
 
+    DiaryCommentDto.UpdateCommentResponse updateComment(UUID diaryId, UUID commentId, DiaryCommentDto.UpdateCommentRequest request);
+
 }

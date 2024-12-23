@@ -31,4 +31,16 @@ public class DiaryCommentMapper {
                 .build();
     }
 
+    public DiaryCommentDto.UpdateCommentResponse commentToUpdateCommentResponse(DiaryComment comment) {
+        return DiaryCommentDto.UpdateCommentResponse.builder()
+                .commentId(comment.getDiaryCommentId())
+                .isCommentOwner(true)
+                .commentAuthorId(comment.getUser().getUserId())
+                .diaryAuthorNickname(comment.getUser().getUserNickname())
+                .diaryAuthorProfileImage(comment.getUser().getUserProfileImage())
+                .createdAt(comment.getCreatedAt())
+                .commentContents(comment.getCommentContents())
+                .build();
+    }
+
 }

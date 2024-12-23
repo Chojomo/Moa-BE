@@ -87,4 +87,8 @@ public class DiaryComment extends TimeStamped {
         }
     }
 
+    public void updateCommentContents(String commentContents) {
+        this.commentContents = commentContents;
+    }
+
 }

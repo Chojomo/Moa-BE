@@ -79,9 +79,31 @@ public class DiaryCommentServiceImpl implements DiaryCommentService {
         diaryCommentRepository.save(comment);
     }
 
+    @Override
+    public DiaryCommentDto.UpdateCommentResponse updateComment(UUID diaryId, UUID commentId, DiaryCommentDto.UpdateCommentRequest request) {
+        User loginUser = authService.getLoginUser();
+
+        diaryService.findDiaryOrThrow(diaryId);
+
+        DiaryComment comment = findCommentOrThrow(commentId);
+
+        checkCommentOwnership(comment, loginUser);
+
+        comment.updateCommentContents(request.getCommentContents());
+
+
+        return diaryCommentMapper.commentToUpdateCommentResponse(comment);
+    }
+
     public DiaryComment findCommentOrThrow(UUID commentId) {
         Optional<DiaryComment> optionalDiaryComment = diaryCommentRepository.findById(commentId);
         return optionalDiaryComment.orElseThrow();
+    }
+
+    public void checkCommentOwnership(DiaryComment comment, User user) {
+        if (!comment.getUser().getUserId().equals(user.getUserId())) {
+            log.info("댓글 수정 권한이 없습니다.");
+        }
     }
 
 }
