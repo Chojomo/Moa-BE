@@ -29,8 +29,8 @@ public class DiaryCommentDto {
         private UUID commentId;
         private Boolean isCommentOwner;
         private UUID commentAuthorId;
-        private String diaryAuthorNickname;
-        private String diaryAuthorProfileImage;
+        private String commentAuthorNickname;
+        private String commentAuthorProfileImage;
         private LocalDateTime createdAt;
         private String commentContents;
     }
@@ -41,8 +41,8 @@ public class DiaryCommentDto {
         private UUID commentId;
         private Boolean isCommentOwner;
         private UUID commentAuthorId;
-        private String diaryAuthorNickname;
-        private String diaryAuthorProfileImage;
+        private String commentAuthorNickname;
+        private String commentAuthorProfileImage;
         private LocalDateTime createdAt;
         private String commentContents;
     }
