@@ -24,6 +24,11 @@ public class DiaryCommentDto {
     }
 
     @Data
+    public static class UpdateReplyRequest {
+        private String replyContents;
+    }
+
+    @Data
     @Builder
     public static class CreateCommentResponse {
         private UUID commentId;
@@ -50,6 +55,18 @@ public class DiaryCommentDto {
     @Data
     @Builder
     public static class CreateReplyResponse {
+        private UUID replyId;
+        private Boolean isReplyOwner;
+        private UUID replyAuthorId;
+        private String replyAuthorNickname;
+        private String replyAuthorProfileImage;
+        private LocalDateTime createdAt;
+        private String replyContents;
+    }
+
+    @Data
+    @Builder
+    public static class UpdateReplyResponse {
         private UUID replyId;
         private Boolean isReplyOwner;
         private UUID replyAuthorId;

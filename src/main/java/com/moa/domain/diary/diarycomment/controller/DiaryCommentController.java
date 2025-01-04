@@ -44,5 +44,12 @@ public class DiaryCommentController {
         return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.CREATED.value(), response), HttpStatus.CREATED);
     }
 
+    @PatchMapping("/{diaryId}/reply/{replyId}")
+    public ResponseEntity<SingleResponseDto<DiaryCommentDto.UpdateReplyResponse>> updateReply(
+            @PathVariable UUID diaryId, @PathVariable UUID replyId, @RequestBody DiaryCommentDto.UpdateReplyRequest request) {
+        DiaryCommentDto.UpdateReplyResponse response = diaryCommentService.updateReply(diaryId, replyId, request);
+        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.CREATED.value(), response), HttpStatus.CREATED);
+    }
+
 }
 
