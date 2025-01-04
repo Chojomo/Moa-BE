@@ -12,8 +12,8 @@ public class DiaryCommentMapper {
                 .commentId(comment.getDiaryCommentId())
                 .isCommentOwner(true)
                 .commentAuthorId(comment.getUser().getUserId())
-                .diaryAuthorNickname(comment.getUser().getUserNickname())
-                .diaryAuthorProfileImage(comment.getUser().getUserProfileImage())
+                .commentAuthorNickname(comment.getUser().getUserNickname())
+                .commentAuthorProfileImage(comment.getUser().getUserProfileImage())
                 .createdAt(comment.getCreatedAt())
                 .commentContents(comment.getCommentContents())
                 .build();
@@ -36,10 +36,22 @@ public class DiaryCommentMapper {
                 .commentId(comment.getDiaryCommentId())
                 .isCommentOwner(true)
                 .commentAuthorId(comment.getUser().getUserId())
-                .diaryAuthorNickname(comment.getUser().getUserNickname())
-                .diaryAuthorProfileImage(comment.getUser().getUserProfileImage())
+                .commentAuthorNickname(comment.getUser().getUserNickname())
+                .commentAuthorProfileImage(comment.getUser().getUserProfileImage())
                 .createdAt(comment.getCreatedAt())
                 .commentContents(comment.getCommentContents())
+                .build();
+    }
+
+    public DiaryCommentDto.UpdateReplyResponse replyToUpdateReplyResponse(DiaryComment reply) {
+        return DiaryCommentDto.UpdateReplyResponse.builder()
+                .replyId(reply.getDiaryCommentId())
+                .isReplyOwner(true)
+                .replyAuthorId(reply.getUser().getUserId())
+                .replyAuthorNickname(reply.getUser().getUserNickname())
+                .replyAuthorProfileImage(reply.getUser().getUserProfileImage())
+                .createdAt(reply.getCreatedAt())
+                .replyContents(reply.getCommentContents())
                 .build();
     }
 

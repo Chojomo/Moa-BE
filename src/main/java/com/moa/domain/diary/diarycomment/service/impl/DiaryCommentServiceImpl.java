@@ -95,6 +95,21 @@ public class DiaryCommentServiceImpl implements DiaryCommentService {
         return diaryCommentMapper.commentToUpdateCommentResponse(comment);
     }
 
+    @Override
+    public DiaryCommentDto.UpdateReplyResponse updateReply(UUID diaryId, UUID replyId, DiaryCommentDto.UpdateReplyRequest request) {
+        User loginUser = authService.getLoginUser();
+
+        diaryService.findDiaryOrThrow(diaryId);
+
+        DiaryComment reply = findCommentOrThrow(replyId);
+
+        checkCommentOwnership(reply, loginUser);
+
+        reply.updateCommentContents(request.getReplyContents());
+
+        return diaryCommentMapper.replyToUpdateReplyResponse(reply);
+    }
+
     public DiaryComment findCommentOrThrow(UUID commentId) {
         Optional<DiaryComment> optionalDiaryComment = diaryCommentRepository.findById(commentId);
         return optionalDiaryComment.orElseThrow();
