@@ -24,6 +24,7 @@ public class UserDataResponder {
                 UserDataResponse.builder()
                         .userId(user.getUserId())
                         .userNickname(user.getUserNickname())
+                        .userProfileImage(user.getUserProfileImage())
                         .build()
         ).build();
 
