@@ -9,5 +9,6 @@ public class UserDataResponse {
 
     private UUID userId;
     private String userNickname;
+    private String userProfileImage;
 
 }
