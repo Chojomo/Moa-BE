@@ -16,4 +16,6 @@ public interface DiaryCommentService {
 
     DiaryCommentDto.UpdateReplyResponse updateReply(UUID diaryId, UUID replyId, DiaryCommentDto.UpdateReplyRequest request);
 
+    void deleteComment(UUID diaryId, UUID commentId);
+
 }

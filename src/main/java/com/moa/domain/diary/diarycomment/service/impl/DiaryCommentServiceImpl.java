@@ -110,6 +110,21 @@ public class DiaryCommentServiceImpl implements DiaryCommentService {
         return diaryCommentMapper.replyToUpdateReplyResponse(reply);
     }
 
+    @Override
+    public void deleteComment(UUID diaryId, UUID commentId) {
+        User loginUser = authService.getLoginUser();
+
+        Diary diaryOrThrow = diaryService.findDiaryOrThrow(diaryId);
+
+        diaryOrThrow.decrementCommentCount();
+
+        DiaryComment comment = findCommentOrThrow(commentId);
+
+        checkCommentOwnership(comment, loginUser);
+
+        comment.deleteComment();
+    }
+
     public DiaryComment findCommentOrThrow(UUID commentId) {
         Optional<DiaryComment> optionalDiaryComment = diaryCommentRepository.findById(commentId);
         return optionalDiaryComment.orElseThrow();

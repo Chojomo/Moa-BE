@@ -51,5 +51,11 @@ public class DiaryCommentController {
         return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.CREATED.value(), response), HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{diaryId}/comments/{commentId}")
+    public ResponseEntity<SingleResponseDto> deleteComment(@PathVariable UUID diaryId, @PathVariable UUID commentId) {
+        diaryCommentService.deleteComment(diaryId, commentId);
+        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value()), HttpStatus.OK);
+    }
+
 }
 

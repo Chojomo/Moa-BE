@@ -149,4 +149,8 @@ public class Diary extends TimeStamped {
         this.deletedAt = LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS);
     }
 
+    public void decrementCommentCount() {
+        this.commentCount--;
+    }
+
 }
