@@ -8,6 +8,7 @@ import lombok.*;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -51,6 +52,10 @@ public class DiaryComment extends TimeStamped {
     @Comment("좋아요 수")
     private Long likeCount = 0L;
 
+    @Column(name = "deleted_at")
+    @Comment("삭제 시간")
+    private LocalDateTime deletedAt;
+
     @Builder
     public DiaryComment(DiaryComment parentComment, List<DiaryComment> childrenComments, Diary diary, User user, String commentContents) {
         this.parentComment = parentComment;
@@ -89,6 +94,10 @@ public class DiaryComment extends TimeStamped {
 
     public void updateCommentContents(String commentContents) {
         this.commentContents = commentContents;
+    }
+
+    public void deleteComment() {
+        this.deletedAt = LocalDateTime.now().withNano(0);
     }
 
 }
