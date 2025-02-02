@@ -76,6 +76,15 @@ public class AuthServiceImpl implements AuthService {
         userRepository.save(loginUser);
     }
 
+    @Override
+    public void checkEmailAvailability(String email) {
+        Optional<User> findUser = userRepository.findUserByUserEmail(email);
+
+        if (findUser.isPresent()) {
+            throw new UserException(UserExceptionCode.EMAIL_EXISTS);
+        }
+    }
+
     private PrincipalDetailsService.PrincipalDetails getPrincipalDetails() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || !authentication.isAuthenticated()) {
