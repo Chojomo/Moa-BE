@@ -13,4 +13,6 @@ public interface AuthService {
 
     void changePassword(UserDto.ChangePasswordRequest req);
 
+    void checkEmailAvailability(String email);
+
 }

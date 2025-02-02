@@ -12,7 +12,8 @@ public enum UserExceptionCode implements BaseExceptionCode {
     USER_NOT_EXISTS(HttpStatus.NOT_FOUND.value(), "유저를 찾을 수 없습니다.", "USER_001"),
     EMAIL_NOT_EXISTS(HttpStatus.NOT_FOUND.value(), "이메일을 찾을 수 없습니다.", "USER_002"),
     PASSWORD_NOT_MATCH(HttpStatus.BAD_REQUEST.value(), "현재 비밀번호가 일치하지 않습니다.", "USER_003"),
-    PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST.value(), "새 비밀번호와 확인 비밀번호가 일치하지 않습니다.", "USER_004");
+    PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST.value(), "새 비밀번호와 확인 비밀번호가 일치하지 않습니다.", "USER_004"),
+    EMAIL_EXISTS(HttpStatus.CONFLICT.value(), "이미 사용 중인 이메일입니다.", "USER_005");
 
     private final Integer status;
     private final String message;

@@ -6,10 +6,7 @@ import com.moa.global.security.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,14 +18,18 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<SingleResponseDto<Integer>> registerUser(@RequestBody UserDto.CreateUserReq req) {
         authService.registerUser(req);
-
         return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.CREATED.value()), HttpStatus.CREATED);
     }
 
     @PostMapping("/change/password")
     public ResponseEntity<SingleResponseDto<Integer>> changePassword(@RequestBody UserDto.ChangePasswordRequest req) {
         authService.changePassword(req);
+        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value()), HttpStatus.OK);
+    }
 
+    @GetMapping("/email/check")
+    public ResponseEntity<SingleResponseDto<Integer>> checkEmailAvailability(@RequestParam String email) {
+        authService.checkEmailAvailability(email);
         return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value()), HttpStatus.OK);
     }
 
