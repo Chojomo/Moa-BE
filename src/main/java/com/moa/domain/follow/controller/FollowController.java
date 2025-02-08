@@ -1,13 +1,16 @@
 package com.moa.domain.follow.controller;
 
-import com.moa.domain.follow.dto.FollowDto;
+import com.moa.domain.follow.dto.query.UserFollowerDto;
 import com.moa.domain.follow.service.FollowService;
+import com.moa.global.dto.MultiResponseDto;
 import com.moa.global.dto.SingleResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -23,10 +26,12 @@ public class FollowController {
         return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value()), HttpStatus.OK);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<SingleResponseDto<FollowDto.GetUserFollowsResponse>> getFollows(@PathVariable UUID userId) {
-        FollowDto.GetUserFollowsResponse response = followService.getFollows(userId);
-        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value(), response), HttpStatus.OK);
+    @GetMapping("/{userId}/follower")
+    public ResponseEntity<MultiResponseDto<List<UserFollowerDto>>> getFollowers(@PathVariable UUID userId,
+                                                                                          @RequestParam(defaultValue = "0") Integer pageNumber,
+                                                                                          @RequestParam(defaultValue = "10") Integer pageSize) {
+        Page<UserFollowerDto> response = followService.getFollowers(userId, pageNumber, pageSize);
+        return ResponseEntity.ok(new MultiResponseDto<>(HttpStatus.OK.value(), response.getContent(), response));
     }
 
 }
