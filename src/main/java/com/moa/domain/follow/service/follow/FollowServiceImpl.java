@@ -1,7 +1,6 @@
 package com.moa.domain.follow.service.follow;
 
-import com.moa.domain.follow.dto.query.UserFollowerDto;
-import com.moa.domain.follow.mapper.FollowMapper;
+import com.moa.domain.follow.dto.query.UserFollowDto;
 import com.moa.domain.follow.entity.Follow;
 import com.moa.domain.follow.repository.FollowRepository;
 import com.moa.domain.follow.service.FollowService;
@@ -47,12 +46,21 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public Page<UserFollowerDto> getFollowers(UUID userId, Integer pageNumber, Integer pageSize) {
+    public Page<UserFollowDto> getFollowers(UUID userId, Integer pageNumber, Integer pageSize) {
         User user = userService.findUserOrThrow(userId);
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
         return followRepository.findFollowByFollower(user, pageable);
+    }
+
+    @Override
+    public Page<UserFollowDto> getFollowings(UUID userId, Integer pageNumber, Integer pageSize) {
+        User user = userService.findUserOrThrow(userId);
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+        return followRepository.findFollowByFollowing(user, pageable);
     }
 
 }

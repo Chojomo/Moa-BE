@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class UserFollowerDto {
+public class UserFollowDto {
 
     private UUID userId;
     private String userNickname;

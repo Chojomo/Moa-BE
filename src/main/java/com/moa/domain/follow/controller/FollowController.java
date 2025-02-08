@@ -1,6 +1,6 @@
 package com.moa.domain.follow.controller;
 
-import com.moa.domain.follow.dto.query.UserFollowerDto;
+import com.moa.domain.follow.dto.query.UserFollowDto;
 import com.moa.domain.follow.service.FollowService;
 import com.moa.global.dto.MultiResponseDto;
 import com.moa.global.dto.SingleResponseDto;
@@ -27,10 +27,18 @@ public class FollowController {
     }
 
     @GetMapping("/{userId}/follower")
-    public ResponseEntity<MultiResponseDto<List<UserFollowerDto>>> getFollowers(@PathVariable UUID userId,
-                                                                                          @RequestParam(defaultValue = "0") Integer pageNumber,
-                                                                                          @RequestParam(defaultValue = "10") Integer pageSize) {
-        Page<UserFollowerDto> response = followService.getFollowers(userId, pageNumber, pageSize);
+    public ResponseEntity<MultiResponseDto<List<UserFollowDto>>> getFollowers(@PathVariable UUID userId,
+                                                                              @RequestParam(defaultValue = "0") Integer pageNumber,
+                                                                              @RequestParam(defaultValue = "10") Integer pageSize) {
+        Page<UserFollowDto> response = followService.getFollowers(userId, pageNumber, pageSize);
+        return ResponseEntity.ok(new MultiResponseDto<>(HttpStatus.OK.value(), response.getContent(), response));
+    }
+
+    @GetMapping("/{userId}/following")
+    public ResponseEntity<MultiResponseDto<List<UserFollowDto>>> getFollowings(@PathVariable UUID userId,
+                                                                                @RequestParam(defaultValue = "0") Integer pageNumber,
+                                                                                @RequestParam(defaultValue = "10") Integer pageSize) {
+        Page<UserFollowDto> response = followService.getFollowings(userId, pageNumber, pageSize);
         return ResponseEntity.ok(new MultiResponseDto<>(HttpStatus.OK.value(), response.getContent(), response));
     }
 
