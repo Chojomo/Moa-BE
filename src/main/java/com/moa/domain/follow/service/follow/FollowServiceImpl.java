@@ -2,6 +2,8 @@ package com.moa.domain.follow.service.follow;
 
 import com.moa.domain.follow.dto.query.UserFollowDto;
 import com.moa.domain.follow.entity.Follow;
+import com.moa.domain.follow.exception.FollowException;
+import com.moa.domain.follow.exception.FollowExceptionCode;
 import com.moa.domain.follow.repository.FollowRepository;
 import com.moa.domain.follow.service.FollowService;
 import com.moa.domain.member.entity.User;
@@ -33,6 +35,10 @@ public class FollowServiceImpl implements FollowService {
         User loginUser = authService.getLoginUser();
 
         User user = userService.findUserOrThrow(userId);
+
+        if (loginUser.getUserId().equals(user.getUserId())) {
+            throw new FollowException(FollowExceptionCode.SELF_FOLLOW_NOT_ALLOWED);
+        }
 
         followRepository.findFollowByFollowerAndFollowing(loginUser, user)
                 .ifPresentOrElse(followRepository::delete,
