@@ -57,7 +57,7 @@ public class FollowServiceImpl implements FollowService {
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
-        return followRepository.findFollowByFollower(user, pageable);
+        return followRepository.findFollowerByUser(user, pageable);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class FollowServiceImpl implements FollowService {
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
-        return followRepository.findFollowByFollowing(user, pageable);
+        return followRepository.findFollowingByUser(user, pageable);
     }
 
 }
