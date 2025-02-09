@@ -22,15 +22,15 @@ public interface FollowRepository extends JpaRepository<Follow, UUID> {
             ") " +
             "FROM FOLLOW f " +
             "LEFT JOIN f.following " +
-            "WHERE f.follower = :follower")
-    Page<UserFollowDto> findFollowByFollower(User follower, Pageable pageable);
+            "WHERE f.following = :user")
+    Page<UserFollowDto> findFollowerByUser(User user, Pageable pageable);
 
     @Query("SELECT new com.moa.domain.follow.dto.query.UserFollowDto(" +
             "f.follower.userId, f.follower.userNickname, f.follower.userProfileImage" +
             ") " +
             "FROM FOLLOW f " +
             "LEFT JOIN f.follower " +
-            "WHERE f.following = :following")
-    Page<UserFollowDto> findFollowByFollowing(User following, Pageable pageable);
+            "WHERE f.follower = :user")
+    Page<UserFollowDto> findFollowingByUser(User user, Pageable pageable);
 
 }
