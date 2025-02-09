@@ -1,5 +1,7 @@
 package com.moa.domain.member.service.impl;
 
+import com.moa.domain.follow.entity.Follow;
+import com.moa.domain.follow.repository.FollowRepository;
 import com.moa.domain.member.dto.UserDto;
 import com.moa.domain.member.entity.User;
 import com.moa.domain.member.exception.UserException;
@@ -26,6 +28,7 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final FollowRepository followRepository;
     private final AuthService authService;
     private final UserMapper userMapper;
     private final ObjectStorageService objectStorageService;
@@ -43,15 +46,13 @@ public class UserServiceImpl implements UserService {
 
         User user = optionalUser.orElseThrow(() -> new UserException(UserExceptionCode.USER_NOT_EXISTS));
 
-        Boolean isMyPage;
+        Boolean isFollowing = false;
 
-        if (loginUser.getUserId().equals(user.getUserId())) {
-            isMyPage = true;
-        } else {
-            isMyPage = false;
+        if (followRepository.findFollowByFollowerAndFollowing(loginUser, user).isPresent()) {
+            isFollowing = true;
         }
 
-        return userMapper.toUserMyPageResponse(user, isMyPage);
+        return userMapper.toUserMyPageResponse(loginUser, user, isFollowing);
     }
 
     @Override

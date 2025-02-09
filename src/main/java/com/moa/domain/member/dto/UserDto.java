@@ -16,6 +16,8 @@ public class UserDto {
     public static class GetUserMyPageResponse {
         private String userProfileImage;
         private String userNickname;
+        private String userIntroduce;
+        private Boolean isFollowing;
         private Integer followerCount;
         private Integer followingCount;
         private Boolean isMyPage;
