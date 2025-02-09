@@ -22,13 +22,15 @@ public class UserMapper {
                 .build();
     }
 
-    public UserDto.GetUserMyPageResponse toUserMyPageResponse(User user, Boolean isMyPage) {
+    public UserDto.GetUserMyPageResponse toUserMyPageResponse(User loginUser, User user, Boolean isFollowing) {
         return UserDto.GetUserMyPageResponse.builder()
                 .userProfileImage(user.getUserProfileImage())
                 .userNickname(user.getUserNickname())
-                .followerCount(user.getFollowerList().size())
-                .followingCount(user.getFollowingList().size())
-                .isMyPage(isMyPage)
+                .userIntroduce(user.getUserIntroduce())
+                .isFollowing(isFollowing)
+                .followerCount(user.getFollowingList().size())
+                .followingCount(user.getFollowerList().size())
+                .isMyPage(loginUser != null && loginUser.equals(user))
                 .build();
     }
 
