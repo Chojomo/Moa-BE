@@ -30,7 +30,7 @@ public class UserMapper {
                 .isFollowing(isFollowing)
                 .followerCount(user.getFollowingList().size())
                 .followingCount(user.getFollowerList().size())
-                .isMyPage(loginUser != null && loginUser.equals(user))
+                .isMyPage(loginUser != null && loginUser.getUserId().equals(user.getUserId()))
                 .build();
     }
 
