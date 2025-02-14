@@ -73,6 +73,7 @@ public class DiaryMapper {
 
     private List<DiaryDto.ReplyData> convertToReplyDataList(List<DiaryComment> childrenComments, User loginUser, Map<UUID, Boolean> loginUserCommentLikeData) {
         return childrenComments.stream()
+                .filter(reply -> reply.getDeletedAt() == null)
                 .map(reply -> DiaryDto.ReplyData.builder()
                         .replyId(reply.getDiaryCommentId())
                         .isReplyOwner(loginUser != null && reply.getUser().getUserId().equals(loginUser.getUserId()))
