@@ -219,6 +219,12 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
+    public Page<DiaryDto.UserDiaryData> getUserDiaryList(UUID userId, Integer pageNumber, Integer pageSize) {
+        Page<DiaryDto.UserDiaryData> userDiaryList = diaryRepository.findUserDiaryList(userId, pageNumber, pageSize);
+        return userDiaryList;
+    }
+
+    @Override
     public Diary findDiaryOrThrow(UUID diaryId) {
         Optional<Diary> optionalDiary = diaryRepository.findNotDeletedDiaryById(diaryId);
         return optionalDiary.orElseThrow();
