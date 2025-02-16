@@ -2,6 +2,7 @@ package com.moa.domain.diary.diary.repository;
 
 import com.moa.domain.diary.diary.dto.query.QUserDiaryDto;
 import com.moa.domain.diary.diary.dto.query.UserDiaryDto;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.AllArgsConstructor;
@@ -30,8 +31,13 @@ public class DiaryRepositoryImpl implements DiaryRepositoryCustom {
                         diary.publishedAt,
                         diary.likeCount,
                         diary.commentCount
-                )).from(diary)
-                .where(diary.user.userId.eq(userId))
+                ))
+                .from(diary)
+                .where(
+                        userIdEq(userId),
+                        isPublic(),
+                        isNotDeleted()
+                )
                 .offset((long) pageNumber * pageSize)
                 .limit(pageSize)
                 .fetch();
@@ -42,6 +48,18 @@ public class DiaryRepositoryImpl implements DiaryRepositoryCustom {
                 .where(diary.user.userId.eq(userId));
 
         return PageableExecutionUtils.getPage(result, PageRequest.of(pageNumber, pageSize), countQuery::fetchOne);
+    }
+
+    private BooleanExpression userIdEq(UUID userId) {
+        return userId != null ? diary.user.userId.eq(userId) : null;
+    }
+
+    private BooleanExpression isPublic() {
+        return diary.isDairyPublic.isTrue();
+    }
+
+    private BooleanExpression isNotDeleted() {
+        return diary.deletedAt.isNull();
     }
 
 }
