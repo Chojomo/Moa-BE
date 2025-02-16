@@ -1,6 +1,7 @@
 package com.moa.domain.diary.diary.service;
 
 import com.moa.domain.diary.diary.dto.DiaryDto;
+import com.moa.domain.diary.diary.dto.query.UserDiaryDto;
 import com.moa.domain.diary.diary.entity.Diary;
 import com.moa.domain.diary.diarylike.dto.DiaryLikeDto;
 import com.moa.global.dto.MultiResponseDto;
@@ -34,6 +35,6 @@ public interface DiaryService {
 
     void deleteDiary(UUID diaryId);
 
-    Page<DiaryDto.UserDiaryData> getUserDiaryList(UUID userId, Integer pageNumber, Integer pageSize);
+    Page<UserDiaryDto> getUserDiaryList(UUID userId, Integer pageNumber, Integer pageSize);
 
 }

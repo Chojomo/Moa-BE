@@ -1,6 +1,7 @@
 package com.moa.domain.diary.diary.service.impl;
 
 import com.moa.domain.diary.diary.dto.DiaryDto;
+import com.moa.domain.diary.diary.dto.query.UserDiaryDto;
 import com.moa.domain.diary.diary.entity.Diary;
 import com.moa.domain.diary.diary.service.DiaryService;
 import com.moa.domain.diary.diarycomment.entity.DiaryComment;
@@ -219,8 +220,8 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public Page<DiaryDto.UserDiaryData> getUserDiaryList(UUID userId, Integer pageNumber, Integer pageSize) {
-        Page<DiaryDto.UserDiaryData> userDiaryList = diaryRepository.findUserDiaryList(userId, pageNumber, pageSize);
+    public Page<UserDiaryDto> getUserDiaryList(UUID userId, Integer pageNumber, Integer pageSize) {
+        Page<UserDiaryDto> userDiaryList = diaryRepository.findUserDiaryList(userId, pageNumber, pageSize);
         return userDiaryList;
     }
 

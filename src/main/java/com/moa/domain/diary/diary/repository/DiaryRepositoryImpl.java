@@ -1,12 +1,11 @@
 package com.moa.domain.diary.diary.repository;
 
-import com.moa.domain.diary.diary.dto.DiaryDto;
-import com.moa.domain.diary.diary.dto.QDiaryDto_UserDiaryData;
+import com.moa.domain.diary.diary.dto.query.QUserDiaryDto;
+import com.moa.domain.diary.diary.dto.query.UserDiaryDto;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.support.PageableExecutionUtils;
 
@@ -21,9 +20,9 @@ public class DiaryRepositoryImpl implements DiaryRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Page<DiaryDto.UserDiaryData> findUserDiaryList(UUID userId, Integer pageNumber, Integer pageSize) {
-        List<DiaryDto.UserDiaryData> result = queryFactory
-                .select(new QDiaryDto_UserDiaryData(
+    public Page<UserDiaryDto> findUserDiaryList(UUID userId, Integer pageNumber, Integer pageSize) {
+        List<UserDiaryDto> result = queryFactory
+                .select(new QUserDiaryDto(
                         diary.diaryId,
                         diary.diaryThumbnail,
                         diary.diaryTitle,
