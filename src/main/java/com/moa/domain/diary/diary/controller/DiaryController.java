@@ -2,6 +2,7 @@ package com.moa.domain.diary.diary.controller;
 
 import com.moa.domain.diary.diary.dto.DiaryDto;
 import com.moa.domain.diary.diary.dto.query.UserDiaryDto;
+import com.moa.domain.diary.diary.dto.query.UserLikedDiaryDto;
 import com.moa.domain.diary.diary.service.DiaryService;
 import com.moa.domain.diary.diarylike.dto.DiaryLikeDto;
 import com.moa.global.dto.MultiResponseDto;
@@ -74,7 +75,7 @@ public class DiaryController {
 
     @PostMapping("/{diaryId}/thumbnail")
     public ResponseEntity<SingleResponseDto<DiaryDto.UploadThumbnailResponse>> uploadThumbnail(@PathVariable UUID diaryId,
-                                                                                                 @RequestPart(value = "image") MultipartFile multipartFile) throws IOException {
+                                                                                               @RequestPart(value = "image") MultipartFile multipartFile) throws IOException {
         return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value(), diaryService.uploadThumbnail(diaryId, multipartFile)), HttpStatus.OK);
     }
 
@@ -86,9 +87,17 @@ public class DiaryController {
 
     @GetMapping("/users/{userId}")
     public ResponseEntity<MultiResponseDto<?>> getUserDiaryList(@PathVariable UUID userId,
-                                                                                            @RequestParam(defaultValue = "0") Integer pageNumber,
-                                                                                            @RequestParam(defaultValue = "10") Integer pageSize) {
+                                                                @RequestParam(defaultValue = "0") Integer pageNumber,
+                                                                @RequestParam(defaultValue = "10") Integer pageSize) {
         Page<UserDiaryDto> response = diaryService.getUserDiaryList(userId, pageNumber, pageSize);
+        return new ResponseEntity<>(new MultiResponseDto<>(HttpStatus.OK.value(), response.getContent(), response), HttpStatus.OK);
+    }
+
+    @GetMapping("/users/{userId}/likes")
+    public ResponseEntity<MultiResponseDto<?>> getUserLikedDiaries(@PathVariable UUID userId,
+                                                                   @RequestParam(defaultValue = "0") Integer pageNumber,
+                                                                   @RequestParam(defaultValue = "10") Integer pageSize) {
+        Page<UserLikedDiaryDto> response = diaryService.getUserLikedDiaries(userId, pageNumber, pageSize);
         return new ResponseEntity<>(new MultiResponseDto<>(HttpStatus.OK.value(), response.getContent(), response), HttpStatus.OK);
     }
 
