@@ -1,11 +1,13 @@
 package com.moa.domain.diary.diary.controller;
 
 import com.moa.domain.diary.diary.dto.DiaryDto;
+import com.moa.domain.diary.diary.dto.query.UserDiaryDto;
 import com.moa.domain.diary.diary.service.DiaryService;
 import com.moa.domain.diary.diarylike.dto.DiaryLikeDto;
 import com.moa.global.dto.MultiResponseDto;
 import com.moa.global.dto.SingleResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -80,6 +82,14 @@ public class DiaryController {
     public ResponseEntity<SingleResponseDto<Integer>> deleteDiary(@PathVariable UUID diaryId) {
         diaryService.deleteDiary(diaryId);
         return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value()), HttpStatus.OK);
+    }
+
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<MultiResponseDto<?>> getUserDiaryList(@PathVariable UUID userId,
+                                                                                            @RequestParam(defaultValue = "0") Integer pageNumber,
+                                                                                            @RequestParam(defaultValue = "10") Integer pageSize) {
+        Page<UserDiaryDto> response = diaryService.getUserDiaryList(userId, pageNumber, pageSize);
+        return new ResponseEntity<>(new MultiResponseDto<>(HttpStatus.OK.value(), response.getContent(), response), HttpStatus.OK);
     }
 
 }

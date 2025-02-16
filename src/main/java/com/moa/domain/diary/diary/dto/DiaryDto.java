@@ -1,5 +1,6 @@
 package com.moa.domain.diary.diary.dto;
 
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.Builder;
 import lombok.Data;
 

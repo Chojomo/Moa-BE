@@ -1,5 +1,6 @@
 package com.moa.domain.diary.diary.repository;
 
+import com.moa.domain.diary.diary.dto.DiaryDto;
 import com.moa.domain.diary.diary.entity.Diary;
 import com.moa.domain.member.entity.User;
 import org.springframework.data.domain.Page;
@@ -12,7 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface DiaryRepository extends JpaRepository<Diary, UUID> {
+public interface DiaryRepository extends JpaRepository<Diary, UUID>, DiaryRepositoryCustom {
 
     Optional<Diary> findDiaryByDiaryStatusAndUser(Byte diaryStatus, User user);
 

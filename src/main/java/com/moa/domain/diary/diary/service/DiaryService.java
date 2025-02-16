@@ -1,9 +1,11 @@
 package com.moa.domain.diary.diary.service;
 
 import com.moa.domain.diary.diary.dto.DiaryDto;
+import com.moa.domain.diary.diary.dto.query.UserDiaryDto;
 import com.moa.domain.diary.diary.entity.Diary;
 import com.moa.domain.diary.diarylike.dto.DiaryLikeDto;
 import com.moa.global.dto.MultiResponseDto;
+import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -32,5 +34,7 @@ public interface DiaryService {
     Diary findDiaryOrThrow(UUID diaryId);
 
     void deleteDiary(UUID diaryId);
+
+    Page<UserDiaryDto> getUserDiaryList(UUID userId, Integer pageNumber, Integer pageSize);
 
 }
