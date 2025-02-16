@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-public class UserDiaryDto {
+public class UserLikedDiaryDto {
     private UUID diaryId;
     private String diaryThumbnail;
     private String diaryTitle;
@@ -17,7 +17,7 @@ public class UserDiaryDto {
     private Long commentCount;
 
     @QueryProjection
-    public UserDiaryDto(UUID diaryId, String diaryThumbnail, String diaryTitle, String diaryContents, LocalDateTime diaryPublishedAt, Long likeCount, Long commentCount) {
+    public UserLikedDiaryDto(UUID diaryId, String diaryThumbnail, String diaryTitle, String diaryContents, LocalDateTime diaryPublishedAt, Long likeCount, Long commentCount) {
         this.diaryId = diaryId;
         this.diaryThumbnail = diaryThumbnail;
         this.diaryTitle = diaryTitle;
