@@ -4,10 +4,14 @@ import com.moa.domain.diary.diary.entity.Diary;
 import com.moa.domain.diary.diary.service.DiaryService;
 import com.moa.domain.diary.diarycomment.dto.DiaryCommentDto;
 import com.moa.domain.diary.diarycomment.entity.DiaryComment;
+import com.moa.domain.diary.diarycomment.exception.DiaryCommentException;
+import com.moa.domain.diary.diarycomment.exception.DiaryCommentExceptionCode;
 import com.moa.domain.diary.diarycomment.mapper.DiaryCommentMapper;
 import com.moa.domain.diary.diarycomment.repository.DiaryCommentRepository;
 import com.moa.domain.diary.diarycomment.service.DiaryCommentService;
 import com.moa.domain.diary.diarycommentlike.service.DiaryCommentLikeService;
+import com.moa.domain.follow.exception.FollowException;
+import com.moa.domain.follow.exception.FollowExceptionCode;
 import com.moa.domain.member.entity.User;
 import com.moa.global.security.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -114,15 +119,35 @@ public class DiaryCommentServiceImpl implements DiaryCommentService {
     public void deleteComment(UUID diaryId, UUID commentId) {
         User loginUser = authService.getLoginUser();
 
-        Diary diaryOrThrow = diaryService.findDiaryOrThrow(diaryId);
+        Diary diary = diaryService.findDiaryOrThrow(diaryId);
 
-        diaryOrThrow.decrementCommentCount();
+        diary.decrementCommentCount();
 
-        DiaryComment comment = findCommentOrThrow(commentId);
+        DiaryComment comment = diaryCommentRepository.findCommentWithActiveChildrenComments(commentId);
+
+        if (comment == null) {
+            throw new DiaryCommentException(DiaryCommentExceptionCode.COMMENT_NOT_EXISTS);
+        }
+
+        validateCommentNotDeleted(comment);
+
+        decrementChildCommentsCount(comment, diary);
 
         checkCommentOwnership(comment, loginUser);
 
         comment.deleteComment();
+    }
+
+    private void validateCommentNotDeleted(DiaryComment comment) {
+        if (comment.getDeletedAt() != null) {
+            throw new DiaryCommentException(DiaryCommentExceptionCode.COMMENT_ALREADY_DELETED);
+        }
+    }
+
+    private void decrementChildCommentsCount(DiaryComment comment, Diary diary) {
+        if (comment.getParentComment() == null && !comment.getChildrenComments().isEmpty()) {
+            diary.decrementReplyCount(comment.getChildrenComments().size());
+        }
     }
 
     public DiaryComment findCommentOrThrow(UUID commentId) {

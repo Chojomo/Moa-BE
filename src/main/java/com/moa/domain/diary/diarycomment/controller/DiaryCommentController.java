@@ -52,7 +52,7 @@ public class DiaryCommentController {
     }
 
     @DeleteMapping("/{diaryId}/comments/{commentId}")
-    public ResponseEntity<SingleResponseDto> deleteComment(@PathVariable UUID diaryId, @PathVariable UUID commentId) {
+    public ResponseEntity<SingleResponseDto<Integer>> deleteComment(@PathVariable UUID diaryId, @PathVariable UUID commentId) {
         diaryCommentService.deleteComment(diaryId, commentId);
         return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value()), HttpStatus.OK);
     }
