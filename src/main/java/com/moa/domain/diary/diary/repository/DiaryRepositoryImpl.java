@@ -77,7 +77,7 @@ public class DiaryRepositoryImpl implements DiaryRepositoryCustom {
                         isPublic(),
                         isNotDeleted()
                 )
-                .orderBy(diary.publishedAt.desc())
+                .orderBy(diaryLike.createdAt.desc())
                 .offset((long) pageNumber * pageSize)
                 .limit(pageSize)
                 .fetch();
