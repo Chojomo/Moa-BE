@@ -153,4 +153,8 @@ public class Diary extends TimeStamped {
         this.commentCount--;
     }
 
+    public void decrementReplyCount(Integer replyCount) {
+        this.commentCount -= replyCount;
+    }
+
 }
