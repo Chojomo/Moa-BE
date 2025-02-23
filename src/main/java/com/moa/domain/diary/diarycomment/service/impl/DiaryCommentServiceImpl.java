@@ -3,6 +3,7 @@ package com.moa.domain.diary.diarycomment.service.impl;
 import com.moa.domain.diary.diary.entity.Diary;
 import com.moa.domain.diary.diary.service.DiaryService;
 import com.moa.domain.diary.diarycomment.dto.DiaryCommentDto;
+import com.moa.domain.diary.diarycomment.dto.query.UserCommentDto;
 import com.moa.domain.diary.diarycomment.entity.DiaryComment;
 import com.moa.domain.diary.diarycomment.exception.DiaryCommentException;
 import com.moa.domain.diary.diarycomment.exception.DiaryCommentExceptionCode;
@@ -10,16 +11,15 @@ import com.moa.domain.diary.diarycomment.mapper.DiaryCommentMapper;
 import com.moa.domain.diary.diarycomment.repository.DiaryCommentRepository;
 import com.moa.domain.diary.diarycomment.service.DiaryCommentService;
 import com.moa.domain.diary.diarycommentlike.service.DiaryCommentLikeService;
-import com.moa.domain.follow.exception.FollowException;
-import com.moa.domain.follow.exception.FollowExceptionCode;
 import com.moa.domain.member.entity.User;
+import com.moa.domain.member.service.UserService;
 import com.moa.global.security.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,6 +31,7 @@ public class DiaryCommentServiceImpl implements DiaryCommentService {
 
     private final AuthService authService;
     private final DiaryService diaryService;
+    private final UserService userService;
     private final DiaryCommentRepository diaryCommentRepository;
     private final DiaryCommentLikeService diaryCommentLikeService;
     private final DiaryCommentMapper diaryCommentMapper;
@@ -136,6 +137,13 @@ public class DiaryCommentServiceImpl implements DiaryCommentService {
         checkCommentOwnership(comment, loginUser);
 
         comment.deleteComment();
+    }
+
+    @Override
+    public Page<UserCommentDto> getUserComments(UUID userId, Integer pageNumber, Integer pageSize) {
+        userService.findUserOrThrow(userId);
+
+        return diaryCommentRepository.findUserComments(userId, pageNumber, pageSize);
     }
 
     private void validateCommentNotDeleted(DiaryComment comment) {
