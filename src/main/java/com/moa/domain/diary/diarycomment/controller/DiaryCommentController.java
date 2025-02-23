@@ -1,13 +1,17 @@
 package com.moa.domain.diary.diarycomment.controller;
 
 import com.moa.domain.diary.diarycomment.dto.DiaryCommentDto;
+import com.moa.domain.diary.diarycomment.dto.query.UserCommentDto;
 import com.moa.domain.diary.diarycomment.service.DiaryCommentService;
+import com.moa.global.dto.MultiResponseDto;
 import com.moa.global.dto.SingleResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -55,6 +59,14 @@ public class DiaryCommentController {
     public ResponseEntity<SingleResponseDto<Integer>> deleteComment(@PathVariable UUID diaryId, @PathVariable UUID commentId) {
         diaryCommentService.deleteComment(diaryId, commentId);
         return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value()), HttpStatus.OK);
+    }
+
+    @GetMapping("/comments/users/{userId}")
+    public ResponseEntity<MultiResponseDto<List<UserCommentDto>>> getUserDiaryComments(@PathVariable UUID userId,
+                                                                                       @RequestParam(defaultValue = "0") Integer pageNumber,
+                                                                                       @RequestParam(defaultValue = "10") Integer pageSize) {
+        Page<UserCommentDto> response = diaryCommentService.getUserComments(userId, pageNumber, pageSize);
+        return ResponseEntity.ok(new MultiResponseDto<>(HttpStatus.OK.value(), response.getContent(), response));
     }
 
 }
