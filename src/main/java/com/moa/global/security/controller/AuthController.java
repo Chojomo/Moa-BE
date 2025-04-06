@@ -18,19 +18,19 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<SingleResponseDto<Integer>> registerUser(@RequestBody UserDto.CreateUserReq req) {
         authService.registerUser(req);
-        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.CREATED.value()), HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(SingleResponseDto.created());
     }
 
     @PostMapping("/change/password")
     public ResponseEntity<SingleResponseDto<Integer>> changePassword(@RequestBody UserDto.ChangePasswordRequest req) {
         authService.changePassword(req);
-        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value()), HttpStatus.OK);
+        return ResponseEntity.ok().body(SingleResponseDto.ok());
     }
 
     @GetMapping("/email/check")
     public ResponseEntity<SingleResponseDto<Integer>> checkEmailAvailability(@RequestParam String email) {
         authService.checkEmailAvailability(email);
-        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value()), HttpStatus.OK);
+        return ResponseEntity.ok().body(SingleResponseDto.ok());
     }
 
 }
