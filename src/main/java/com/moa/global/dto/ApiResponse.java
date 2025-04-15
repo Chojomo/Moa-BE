@@ -48,6 +48,10 @@ public class ApiResponse<T> {
         return of(HttpStatus.OK, null);
     }
 
+    public static <T> ApiResponse<T> created(T data) {
+        return of(HttpStatus.CREATED, data);
+    }
+
     public static <T> ApiResponse<T> created() {
         return of(HttpStatus.CREATED, null);
     }
