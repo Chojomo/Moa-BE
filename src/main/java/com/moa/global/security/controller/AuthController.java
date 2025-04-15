@@ -18,19 +18,22 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<Integer>> registerUser(@RequestBody UserDto.CreateUserReq req) {
         authService.registerUser(req);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.created());
     }
 
     @PostMapping("/change/password")
     public ResponseEntity<ApiResponse<Integer>> changePassword(@RequestBody UserDto.ChangePasswordRequest req) {
         authService.changePassword(req);
-        return ResponseEntity.ok().body(ApiResponse.ok());
+
+        return ResponseEntity.ok(ApiResponse.ok());
     }
 
     @GetMapping("/email/check")
     public ResponseEntity<ApiResponse<Integer>> checkEmailAvailability(@RequestParam String email) {
         authService.checkEmailAvailability(email);
-        return ResponseEntity.ok().body(ApiResponse.ok());
+
+        return ResponseEntity.ok(ApiResponse.ok());
     }
 
 }

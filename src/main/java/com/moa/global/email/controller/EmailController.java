@@ -1,5 +1,6 @@
 package com.moa.global.email.controller;
 
+import com.moa.global.dto.ApiResponse;
 import com.moa.global.email.dto.EmailDto;
 import com.moa.global.email.service.EmailService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class EmailController {
     public ResponseEntity<?> sendTempPasswordMail(@RequestBody EmailDto.TempPasswordRequest dto) {
         emailService.sendTempPasswordMail(dto);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ApiResponse.ok());
     }
 
 }

@@ -2,8 +2,8 @@ package com.moa.domain.follow.controller;
 
 import com.moa.domain.follow.dto.query.UserFollowDto;
 import com.moa.domain.follow.service.FollowService;
+import com.moa.global.dto.ApiResponse;
 import com.moa.global.dto.MultiResponseDto;
-import com.moa.global.dto.SingleResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -21,24 +21,31 @@ public class FollowController {
     private final FollowService followService;
 
     @PostMapping("/{userId}")
-    public ResponseEntity<SingleResponseDto<Integer>> sendFollowRequest(@PathVariable UUID userId) {
+    public ResponseEntity<ApiResponse<Integer>> sendFollowRequest(@PathVariable UUID userId) {
         followService.sendFollowRequest(userId);
-        return new ResponseEntity<>(new SingleResponseDto<>(HttpStatus.OK.value()), HttpStatus.OK);
+
+        return ResponseEntity.ok(ApiResponse.ok());
     }
 
     @GetMapping("/{userId}/follower")
-    public ResponseEntity<MultiResponseDto<List<UserFollowDto>>> getFollowers(@PathVariable UUID userId,
-                                                                              @RequestParam(defaultValue = "0") Integer pageNumber,
-                                                                              @RequestParam(defaultValue = "10") Integer pageSize) {
+    public ResponseEntity<MultiResponseDto<List<UserFollowDto>>> getFollowers(
+            @PathVariable UUID userId,
+            @RequestParam(defaultValue = "0") Integer pageNumber,
+            @RequestParam(defaultValue = "10") Integer pageSize
+    ) {
         Page<UserFollowDto> response = followService.getFollowers(userId, pageNumber, pageSize);
+
         return ResponseEntity.ok(new MultiResponseDto<>(HttpStatus.OK.value(), response.getContent(), response));
     }
 
     @GetMapping("/{userId}/following")
-    public ResponseEntity<MultiResponseDto<List<UserFollowDto>>> getFollowings(@PathVariable UUID userId,
-                                                                                @RequestParam(defaultValue = "0") Integer pageNumber,
-                                                                                @RequestParam(defaultValue = "10") Integer pageSize) {
+    public ResponseEntity<MultiResponseDto<List<UserFollowDto>>> getFollowings(
+            @PathVariable UUID userId,
+            @RequestParam(defaultValue = "0") Integer pageNumber,
+            @RequestParam(defaultValue = "10") Integer pageSize
+    ) {
         Page<UserFollowDto> response = followService.getFollowings(userId, pageNumber, pageSize);
+
         return ResponseEntity.ok(new MultiResponseDto<>(HttpStatus.OK.value(), response.getContent(), response));
     }
 

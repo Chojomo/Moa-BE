@@ -2,6 +2,7 @@ package com.moa.global.security.utils;
 
 import com.google.gson.Gson;
 import com.moa.domain.member.entity.User;
+import com.moa.global.dto.ApiResponse;
 import com.moa.global.dto.SingleResponseDto;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class UserDataResponder {
     public void sendUserDataResponse(User user, HttpServletResponse response) throws IOException {
         Gson gson = new Gson();
 
-        SingleResponseDto<UserDataResponse> userData = SingleResponseDto.<UserDataResponse>builder()
+        ApiResponse<UserDataResponse> userData = ApiResponse.<UserDataResponse>builder()
                 .status(HttpStatus.OK.value())
                 .data(
                 UserDataResponse.builder()
@@ -27,7 +28,6 @@ public class UserDataResponder {
                         .userProfileImage(user.getUserProfileImage())
                         .build()
         ).build();
-
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.getWriter().write(gson.toJson(userData, SingleResponseDto.class));
