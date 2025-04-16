@@ -3,7 +3,6 @@ package com.moa.global.security.utils;
 import com.google.gson.Gson;
 import com.moa.domain.member.entity.User;
 import com.moa.global.dto.ApiResponse;
-import com.moa.global.dto.SingleResponseDto;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,7 +29,7 @@ public class UserDataResponder {
         ).build();
 
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.getWriter().write(gson.toJson(userData, SingleResponseDto.class));
+        response.getWriter().write(gson.toJson(userData, ApiResponse.class));
     }
 
 }
