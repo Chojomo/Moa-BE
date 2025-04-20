@@ -52,19 +52,15 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public Page<UserFollowDto> getFollowers(UUID userId, Integer pageNumber, Integer pageSize) {
+    public Page<UserFollowDto> getFollowers(UUID userId, Pageable pageable) {
         User user = userService.findUserOrThrow(userId);
-
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
         return followRepository.findFollowerByUser(user, pageable);
     }
 
     @Override
-    public Page<UserFollowDto> getFollowings(UUID userId, Integer pageNumber, Integer pageSize) {
+    public Page<UserFollowDto> getFollowings(UUID userId, Pageable pageable) {
         User user = userService.findUserOrThrow(userId);
-
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
         return followRepository.findFollowingByUser(user, pageable);
     }
