@@ -6,8 +6,6 @@ import com.moa.global.dto.ApiResponse;
 import com.moa.global.dto.MultiResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +30,10 @@ public class FollowController {
     @GetMapping("/{userId}/follower")
     public ResponseEntity<MultiResponseDto<List<UserFollowDto>>> getFollowers(
             @PathVariable UUID userId,
-            @PageableDefault(page = 0, size = 10) Pageable pageable
+            @RequestParam(defaultValue = "0") Integer pageNumber,
+            @RequestParam(defaultValue = "10") Integer pageSize
     ) {
-        Page<UserFollowDto> response = followService.getFollowers(userId, pageable);
+        Page<UserFollowDto> response = followService.getFollowers(userId, pageNumber, pageSize);
 
         return ResponseEntity.ok(new MultiResponseDto<>(HttpStatus.OK.value(), response.getContent(), response));
     }
@@ -42,9 +41,10 @@ public class FollowController {
     @GetMapping("/{userId}/following")
     public ResponseEntity<MultiResponseDto<List<UserFollowDto>>> getFollowings(
             @PathVariable UUID userId,
-            @PageableDefault(page = 0, size = 10) Pageable pageable
+            @RequestParam(defaultValue = "0") Integer pageNumber,
+            @RequestParam(defaultValue = "10") Integer pageSize
     ) {
-        Page<UserFollowDto> response = followService.getFollowings(userId, pageable);
+        Page<UserFollowDto> response = followService.getFollowings(userId, pageNumber, pageSize);
 
         return ResponseEntity.ok(new MultiResponseDto<>(HttpStatus.OK.value(), response.getContent(), response));
     }
