@@ -30,7 +30,7 @@ public class DiaryRepositoryImpl implements DiaryRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Page<UserDiaryDto> findUserDiaryList(UUID userId, Integer pageNumber, Integer pageSize) {
+    public Page<UserDiaryDto> findUserDiaryList(UUID userId, Pageable pageable) {
         List<UserDiaryDto> result = queryFactory
                 .select(new QUserDiaryDto(
                         diary.diaryId,
@@ -48,8 +48,8 @@ public class DiaryRepositoryImpl implements DiaryRepositoryCustom {
                         isNotDeleted()
                 )
                 .orderBy(diary.publishedAt.desc())
-                .offset((long) pageNumber * pageSize)
-                .limit(pageSize)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
 
         JPAQuery<Long> countQuery = queryFactory
@@ -61,11 +61,11 @@ public class DiaryRepositoryImpl implements DiaryRepositoryCustom {
                         isNotDeleted()
                 );
 
-        return PageableExecutionUtils.getPage(result, PageRequest.of(pageNumber, pageSize), countQuery::fetchOne);
+        return PageableExecutionUtils.getPage(result, pageable, countQuery::fetchOne);
     }
 
     @Override
-    public Page<UserLikedDiaryDto> findUserLikedDiaryList(UUID userId, Integer pageNumber, Integer pageSize) {
+    public Page<UserLikedDiaryDto> findUserLikedDiaryList(UUID userId, Pageable pageable) {
         List<UserLikedDiaryDto> result = queryFactory
                 .select(new QUserLikedDiaryDto(
                         diary.diaryId,
@@ -84,8 +84,8 @@ public class DiaryRepositoryImpl implements DiaryRepositoryCustom {
                         isNotDeleted()
                 )
                 .orderBy(diaryLike.createdAt.desc())
-                .offset((long) pageNumber * pageSize)
-                .limit(pageSize)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
 
         JPAQuery<Long> countQuery = queryFactory
@@ -98,7 +98,7 @@ public class DiaryRepositoryImpl implements DiaryRepositoryCustom {
                         isNotDeleted()
                 );
 
-        return PageableExecutionUtils.getPage(result, PageRequest.of(pageNumber, pageSize), countQuery::fetchOne);
+        return PageableExecutionUtils.getPage(result, pageable, countQuery::fetchOne);
     }
 
     @Override

@@ -10,9 +10,9 @@ import java.util.UUID;
 
 public interface DiaryRepositoryCustom {
 
-    Page<UserDiaryDto> findUserDiaryList(UUID userId, Integer pageNumber, Integer pageSize);
+    Page<UserDiaryDto> findUserDiaryList(UUID userId, Pageable pageable);
 
-    Page<UserLikedDiaryDto> findUserLikedDiaryList(UUID userId, Integer pageNumber, Integer pageSize);
+    Page<UserLikedDiaryDto> findUserLikedDiaryList(UUID userId, Pageable pageable);
 
     Page<Diary> findAllWithUser(Pageable pageable);
 

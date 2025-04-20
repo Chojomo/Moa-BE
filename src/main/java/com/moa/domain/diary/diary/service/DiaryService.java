@@ -36,8 +36,8 @@ public interface DiaryService {
 
     void deleteDiary(UUID diaryId);
 
-    Page<UserDiaryDto> getUserDiaryList(UUID userId, Integer pageNumber, Integer pageSize);
+    Page<UserDiaryDto> getUserDiaryList(UUID userId, Pageable pageable);
 
-    Page<UserLikedDiaryDto> getUserLikedDiaries(UUID userId, Integer pageNumber, Integer pageSize);
+    Page<UserLikedDiaryDto> getUserLikedDiaries(UUID userId, Pageable pageable);
 
 }
