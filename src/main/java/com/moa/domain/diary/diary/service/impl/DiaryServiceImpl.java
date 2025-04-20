@@ -15,16 +15,12 @@ import com.moa.domain.diary.diary.repository.DiaryRepository;
 import com.moa.domain.diary.diarylike.dto.DiaryLikeDto;
 import com.moa.domain.diary.diarylike.service.DiaryLikeService;
 import com.moa.domain.member.entity.User;
-import com.moa.global.dto.MultiResponseDto;
 import com.moa.global.security.service.AuthService;
 import com.moa.global.storage.service.ObjectStorageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -147,19 +143,9 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public MultiResponseDto<?> getDiaryList(Integer pageNumber, Integer pageSize, String sortType) {
-        Sort sort = Sort.by(Sort.Direction.DESC, sortType);
-
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
-
-        Page<Diary> diaryPage = diaryRepository.findAllWithUser(pageable);
-
-        DiaryDto.GetDiaryListResponse getDiaryListResponse = DiaryDto.GetDiaryListResponse.builder().diaryPreviewList(diaryPage.getContent().stream()
-                        .map(diaryMapper::diaryTodiaryPreview)
-                        .collect(Collectors.toList()))
-                .build();
-
-        return new MultiResponseDto<>(HttpStatus.OK.value(), getDiaryListResponse, diaryPage);
+    public Page<DiaryDto.DiaryPreview> getDiaryList(Pageable pageable) {
+        return diaryRepository.findAllWithUser(pageable)
+                .map(diaryMapper::diaryTodiaryPreview);
     }
 
     @Override

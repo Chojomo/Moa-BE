@@ -68,7 +68,7 @@ public class ApiResponse<T> {
 
     private static <T> PageInfo ofPageInfo(Page<T> page) {
         return new PageInfo(
-                page.getNumber() + 1,
+                page.getNumber(),
                 page.getSize(),
                 page.getTotalPages(),
                 page.getTotalElements(),

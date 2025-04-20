@@ -9,12 +9,16 @@ import com.moa.global.dto.ApiResponse;
 import com.moa.global.dto.MultiResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -63,14 +67,12 @@ public class DiaryController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<MultiResponseDto> getDiaryList(
-            @RequestParam(defaultValue = "0") Integer pageNumber,
-            @RequestParam(defaultValue = "10") Integer pageSize,
-            @RequestParam(defaultValue = "publishedAt") String sortType
+    public ResponseEntity<ApiResponse<List<DiaryDto.DiaryPreview>>> getDiaryList(
+            @PageableDefault(sort = "publishedAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        MultiResponseDto<?> diaryList = diaryService.getDiaryList(pageNumber, pageSize, sortType);
+        Page<DiaryDto.DiaryPreview> response = diaryService.getDiaryList(pageable);
 
-        return new ResponseEntity<>(diaryList, HttpStatus.OK);
+        return ResponseEntity.ok(ApiResponse.okPage(response));
     }
 
     @PostMapping("/like/{diaryId}")
