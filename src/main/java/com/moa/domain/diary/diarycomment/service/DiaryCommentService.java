@@ -3,6 +3,7 @@ package com.moa.domain.diary.diarycomment.service;
 import com.moa.domain.diary.diarycomment.dto.DiaryCommentDto;
 import com.moa.domain.diary.diarycomment.dto.query.UserCommentDto;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.UUID;
 
@@ -20,6 +21,6 @@ public interface DiaryCommentService {
 
     void deleteComment(UUID diaryId, UUID commentId);
 
-    Page<UserCommentDto> getUserComments(UUID userId, Integer pageNumber, Integer pageSize);
+    Page<UserCommentDto> getUserComments(UUID userId, Pageable pageable);
 
 }

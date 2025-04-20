@@ -108,8 +108,8 @@ public class DiaryController {
     @GetMapping("/users/{userId}")
     public ResponseEntity<ApiResponse<List<UserDiaryDto>>> getUserDiaryList(
             @PathVariable UUID userId,
-            @PageableDefault(page = 0, size = 10) Pageable pageable)
-    {
+            @PageableDefault(page = 0, size = 10) Pageable pageable
+    ) {
         Page<UserDiaryDto> response = diaryService.getUserDiaryList(userId, pageable);
 
         return ResponseEntity.ok(ApiResponse.okPage(response));
@@ -118,8 +118,8 @@ public class DiaryController {
     @GetMapping("/users/{userId}/likes")
     public ResponseEntity<ApiResponse<List<UserLikedDiaryDto>>> getUserLikedDiaries(
             @PathVariable UUID userId,
-            @PageableDefault(page = 0, size = 10) Pageable pageable)
-    {
+            @PageableDefault(page = 0, size = 10) Pageable pageable
+    ) {
         Page<UserLikedDiaryDto> response = diaryService.getUserLikedDiaries(userId, pageable);
 
         return ResponseEntity.ok(ApiResponse.okPage(response));

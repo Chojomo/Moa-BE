@@ -9,7 +9,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
@@ -40,7 +40,7 @@ public class DiaryCommentRepositoryImpl implements DiaryCommentRepositoryCustom 
     }
 
     @Override
-    public Page<UserCommentDto> findUserComments(UUID userId, Integer pageNumber, Integer pageSize) {
+    public Page<UserCommentDto> findUserComments(UUID userId, Pageable pageable) {
         List<UserCommentDto> result = queryFactory
                 .select(new QUserCommentDto(
                         diaryComment.diaryCommentId,
@@ -59,8 +59,8 @@ public class DiaryCommentRepositoryImpl implements DiaryCommentRepositoryCustom 
                         isPublishedDiary()
                 )
                 .orderBy(diaryComment.createdAt.desc())
-                .offset((long) pageNumber * pageSize)
-                .limit(pageSize)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
 
         JPAQuery<Long> countQuery = queryFactory
@@ -76,7 +76,7 @@ public class DiaryCommentRepositoryImpl implements DiaryCommentRepositoryCustom 
                         isPublishedDiary()
                 );
 
-        return PageableExecutionUtils.getPage(result, PageRequest.of(pageNumber, pageSize), countQuery::fetchOne);
+        return PageableExecutionUtils.getPage(result, pageable, countQuery::fetchOne);
     }
 
     private BooleanExpression commentIdEq(UUID commentId) {
