@@ -6,7 +6,6 @@ import com.moa.domain.diary.diary.dto.query.UserLikedDiaryDto;
 import com.moa.domain.diary.diary.service.DiaryService;
 import com.moa.domain.diary.diarylike.dto.DiaryLikeDto;
 import com.moa.global.dto.ApiResponse;
-import com.moa.global.dto.MultiResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -68,7 +67,7 @@ public class DiaryController {
 
     @GetMapping("/list")
     public ResponseEntity<ApiResponse<List<DiaryDto.DiaryPreview>>> getDiaryList(
-            @PageableDefault(sort = "publishedAt", direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(page = 0, size = 10, sort = "publishedAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
         Page<DiaryDto.DiaryPreview> response = diaryService.getDiaryList(pageable);
 
@@ -107,25 +106,23 @@ public class DiaryController {
     }
 
     @GetMapping("/users/{userId}")
-    public ResponseEntity<MultiResponseDto<?>> getUserDiaryList(
+    public ResponseEntity<ApiResponse<List<UserDiaryDto>>> getUserDiaryList(
             @PathVariable UUID userId,
-            @RequestParam(defaultValue = "0") Integer pageNumber,
-            @RequestParam(defaultValue = "10") Integer pageSize
-    ) {
-        Page<UserDiaryDto> response = diaryService.getUserDiaryList(userId, pageNumber, pageSize);
+            @PageableDefault(page = 0, size = 10) Pageable pageable)
+    {
+        Page<UserDiaryDto> response = diaryService.getUserDiaryList(userId, pageable);
 
-        return new ResponseEntity<>(new MultiResponseDto<>(HttpStatus.OK.value(), response.getContent(), response), HttpStatus.OK);
+        return ResponseEntity.ok(ApiResponse.okPage(response));
     }
 
     @GetMapping("/users/{userId}/likes")
-    public ResponseEntity<MultiResponseDto<?>> getUserLikedDiaries(
+    public ResponseEntity<ApiResponse<List<UserLikedDiaryDto>>> getUserLikedDiaries(
             @PathVariable UUID userId,
-            @RequestParam(defaultValue = "0") Integer pageNumber,
-            @RequestParam(defaultValue = "10") Integer pageSize
-    ) {
-        Page<UserLikedDiaryDto> response = diaryService.getUserLikedDiaries(userId, pageNumber, pageSize);
+            @PageableDefault(page = 0, size = 10) Pageable pageable)
+    {
+        Page<UserLikedDiaryDto> response = diaryService.getUserLikedDiaries(userId, pageable);
 
-        return new ResponseEntity<>(new MultiResponseDto<>(HttpStatus.OK.value(), response.getContent(), response), HttpStatus.OK);
+        return ResponseEntity.ok(ApiResponse.okPage(response));
     }
 
 }

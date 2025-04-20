@@ -207,15 +207,13 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public Page<UserDiaryDto> getUserDiaryList(UUID userId, Integer pageNumber, Integer pageSize) {
-        Page<UserDiaryDto> userDiaryList = diaryRepository.findUserDiaryList(userId, pageNumber, pageSize);
-        return userDiaryList;
+    public Page<UserDiaryDto> getUserDiaryList(UUID userId, Pageable pageable) {
+        return diaryRepository.findUserDiaryList(userId, pageable);
     }
 
     @Override
-    public Page<UserLikedDiaryDto> getUserLikedDiaries(UUID userId, Integer pageNumber, Integer pageSize) {
-        Page<UserLikedDiaryDto> userLikedDiaryList = diaryRepository.findUserLikedDiaryList(userId, pageNumber, pageSize);
-        return userLikedDiaryList;
+    public Page<UserLikedDiaryDto> getUserLikedDiaries(UUID userId, Pageable pageable) {
+        return diaryRepository.findUserLikedDiaryList(userId, pageable);
     }
 
     @Override
