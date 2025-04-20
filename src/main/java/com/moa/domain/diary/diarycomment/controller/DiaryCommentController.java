@@ -4,9 +4,10 @@ import com.moa.domain.diary.diarycomment.dto.DiaryCommentDto;
 import com.moa.domain.diary.diarycomment.dto.query.UserCommentDto;
 import com.moa.domain.diary.diarycomment.service.DiaryCommentService;
 import com.moa.global.dto.ApiResponse;
-import com.moa.global.dto.MultiResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -82,14 +83,13 @@ public class DiaryCommentController {
     }
 
     @GetMapping("/comments/users/{userId}")
-    public ResponseEntity<MultiResponseDto<List<UserCommentDto>>> getUserDiaryComments(
+    public ResponseEntity<ApiResponse<List<UserCommentDto>>> getUserDiaryComments(
             @PathVariable UUID userId,
-            @RequestParam(defaultValue = "0") Integer pageNumber,
-            @RequestParam(defaultValue = "10") Integer pageSize
+            @PageableDefault(page = 0, size = 10) Pageable pageable
     ) {
-        Page<UserCommentDto> response = diaryCommentService.getUserComments(userId, pageNumber, pageSize);
+        Page<UserCommentDto> response = diaryCommentService.getUserComments(userId, pageable);
 
-        return ResponseEntity.ok(new MultiResponseDto<>(HttpStatus.OK.value(), response.getContent(), response));
+        return ResponseEntity.ok(ApiResponse.okPage(response));
     }
 
 }
