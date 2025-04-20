@@ -6,6 +6,8 @@ import com.moa.global.dto.ApiResponse;
 import com.moa.global.dto.MultiResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,25 +30,23 @@ public class FollowController {
     }
 
     @GetMapping("/{userId}/follower")
-    public ResponseEntity<MultiResponseDto<List<UserFollowDto>>> getFollowers(
+    public ResponseEntity<ApiResponse<List<UserFollowDto>>> getFollowers(
             @PathVariable UUID userId,
-            @RequestParam(defaultValue = "0") Integer pageNumber,
-            @RequestParam(defaultValue = "10") Integer pageSize
+            @PageableDefault(page = 0, size = 10) Pageable pageable
     ) {
-        Page<UserFollowDto> response = followService.getFollowers(userId, pageNumber, pageSize);
+        Page<UserFollowDto> response = followService.getFollowers(userId, pageable);
 
-        return ResponseEntity.ok(new MultiResponseDto<>(HttpStatus.OK.value(), response.getContent(), response));
+        return ResponseEntity.ok(ApiResponse.okPage(response));
     }
 
     @GetMapping("/{userId}/following")
-    public ResponseEntity<MultiResponseDto<List<UserFollowDto>>> getFollowings(
+    public ResponseEntity<ApiResponse<List<UserFollowDto>>> getFollowings(
             @PathVariable UUID userId,
-            @RequestParam(defaultValue = "0") Integer pageNumber,
-            @RequestParam(defaultValue = "10") Integer pageSize
+            @PageableDefault(page = 0, size = 10) Pageable pageable
     ) {
-        Page<UserFollowDto> response = followService.getFollowings(userId, pageNumber, pageSize);
+        Page<UserFollowDto> response = followService.getFollowings(userId, pageable);
 
-        return ResponseEntity.ok(new MultiResponseDto<>(HttpStatus.OK.value(), response.getContent(), response));
+        return ResponseEntity.ok(ApiResponse.okPage(response));
     }
 
 }
