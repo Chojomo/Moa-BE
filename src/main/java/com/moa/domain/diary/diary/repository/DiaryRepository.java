@@ -1,6 +1,5 @@
 package com.moa.domain.diary.diary.repository;
 
-import com.moa.domain.diary.diary.dto.DiaryDto;
 import com.moa.domain.diary.diary.entity.Diary;
 import com.moa.domain.member.entity.User;
 import org.springframework.data.domain.Page;
@@ -16,9 +15,6 @@ import java.util.UUID;
 public interface DiaryRepository extends JpaRepository<Diary, UUID>, DiaryRepositoryCustom {
 
     Optional<Diary> findDiaryByDiaryStatusAndUser(Byte diaryStatus, User user);
-
-    @Query("SELECT d FROM DIARY d JOIN FETCH d.user WHERE d.diaryStatus = 2")
-    Page<Diary> findAllWithUser(Pageable pageable);
 
     @Query("SELECT d FROM DIARY d JOIN FETCH d.user WHERE d.diaryId = :diaryId")
     Optional<Diary> findDiaryWithUserById(UUID diaryId);
